@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
-    private static final String LoginPageURL="http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    private static final String LoginPageURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
 
-    private static final By EmailAddressLocator=By.id("email");
-    private static final By PasswordLocator=By.id("passwd");
-    private static final By LoginButton=By.id("SubmitLogin");
+    private static final By txtEmail = By.id("email");
+    private static final By txtPassword = By.id("passwd");
+    private static final By btnLogin = By.id("SubmitLogin");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -19,10 +19,10 @@ public class LoginPage extends BasePage {
         driver.get(LoginPageURL);
     }
 
-    public void login (String emailAddress, String password) {
-        driver.findElement(EmailAddressLocator).sendKeys(emailAddress);
-        driver.findElement(PasswordLocator).sendKeys(password);
-        driver.findElement(LoginButton).click();
+    public void login(String emailAddress, String password) {
+        driver.findElement(txtEmail).sendKeys(emailAddress);
+        driver.findElement(txtPassword).sendKeys(password);
+        driver.findElement(btnLogin).click();
     }
 
 
