@@ -18,21 +18,23 @@ public class ShopWomenPage extends BasePage {
     }
 
     String productName;
-    private static final String ShopPageWomenURL = "http://automationpractice.com/index.php?id_category=3&controller=category";
+    private static final String shopPageWomenURL = "http://automationpractice.com/index.php?id_category=3&controller=category";
 
-    //TODO не находит элементы по локатору!
-    private static final String btnAddToCart = "//*[@id=\"center_column\"]/ul/../div/div[2]/div[2]/a[1]/span";
 
     private static final By btnContinueShopping = By.xpath("//*[@title='Continue shopping']");
     private static final By btnProceedToCheckout = By.xpath("//*[@title='Proceed to checkout']");
 
+    //? локатор!
+    private static final By btnOpenCart = By.className("cart_block");
+
     public void openShopPage() {
-        driver.get(ShopPageWomenURL);
+        driver.get(shopPageWomenURL);
     }
 
+    //Для элемента Blouse:
+    public static final By btnAddToWishlist = By.className("addToWishlist");
 
-
-
+    //или wishlistProd_1
     public void addToCart(String ProductName) {
 
 
@@ -48,11 +50,12 @@ public class ShopWomenPage extends BasePage {
 
         locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + ProductName + "']"));
 
-        //тут всё плохо, выходит только отельно на каждый вид одежды:
-         WebElement btnAddToCart = locAreaOfDetection.findElement(By.xpath("//*[@title='Blouse']/ancestor::li[1]//*[@title='Add to cart']"));
+        //локатор по конкретному предмету одежды:
+        WebElement btnAddToCart = locAreaOfDetection.findElement(By.xpath(String.format("//*[@title='%s']/ancestor::li[1]//*[@title='Add to cart']", ProductName)));
         btnAddToCart.click();
     }
-//String.valueOf(txtProductQuantity))).getText() -?
+
+    //String.valueOf(txtProductQuantity))).getText() -?
     public void continueShopping() {
         driver.findElement(btnContinueShopping).click();
     }
