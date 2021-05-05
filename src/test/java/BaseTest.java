@@ -1,7 +1,4 @@
-import Pages.BasePage;
-import Pages.CartPage;
-import Pages.LoginPage;
-import Pages.ShopWomenPage;
+import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,6 +13,13 @@ public class BaseTest {
     LoginPage loginPage;
     ShopWomenPage shopWomenPage;
     CartPage cartPage;
+    CreateAccountPage createAccountPage;
+    MyAccountPage myAccountPage;
+    AddressesCheckoutPage addressesCheckoutPage;
+    PaymentMethodSelectionPage paymentMethodSelectionPage;
+    PayByWirePage payByWirePage;
+    PayByCheckPage payByCheckPage;
+    ShippingConfirmationPage shippingConfirmationPage;
 
     @BeforeMethod
     public void setUp() {
@@ -26,9 +30,17 @@ public class BaseTest {
         //fullscreen:
         driver.manage().window().maximize();
 
+        createAccountPage = new CreateAccountPage(driver);
         loginPage = new LoginPage(driver);
         shopWomenPage = new ShopWomenPage(driver);
         cartPage = new CartPage(driver);
+        myAccountPage = new MyAccountPage(driver);
+        addressesCheckoutPage = new AddressesCheckoutPage(driver);
+        paymentMethodSelectionPage = new PaymentMethodSelectionPage(driver);
+        payByWirePage = new PayByWirePage(driver);
+        payByCheckPage = new PayByCheckPage(driver);
+        shippingConfirmationPage = new ShippingConfirmationPage(driver);
+
     }
 
     @AfterMethod(alwaysRun = true)

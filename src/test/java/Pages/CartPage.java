@@ -16,14 +16,18 @@ public class CartPage extends BasePage {
     private static final By txtShippingCost = By.id("total_shipping");
     private static final By txtTotalPrice = By.id("total_price");
     private static final By txtItemInCart = By.className("cart_item");
+
+    //TODO цены товаров, +/- количество - на конкретные товары в тестах делать надо?
     //id начинается на total_product_price:
-    private static final By txtIndividualItemInCartPrice = By.cssSelector("*[contains(@id,'total_product_price_')]");
+    //private static final By txtIndividualItemInCartPrice = By.cssSelector("*[contains(@id,'total_product_price_')]");
+
+    private static final By btnProceedToCheckout = By.className("standard-checkout");
 
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
-    public void openCartPage() {
+    public void openPage() {
         driver.get(cartPageURL);
     }
 
