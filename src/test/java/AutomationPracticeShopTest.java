@@ -25,7 +25,7 @@ public class AutomationPracticeShopTest extends BaseTest {
 
 
         cartPage.openPage();
-        //TODO здесь нужно перshopWomenPage.proceedToCheckout();емотать страницу
+        //TODO здесь нужно перемотать страницу
         cartPage.validateNumberOfItemsInCart(1);
         cartPage.validateOrderDetails("Blouse", 1, "$29.00");
 
