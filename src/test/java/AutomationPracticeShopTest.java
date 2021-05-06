@@ -40,5 +40,13 @@ public class AutomationPracticeShopTest extends BaseTest {
         myAccountPage.acc();
     }
 
+    //тест валидный имейл:
+    @Test
+    public void dsj() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.createValidAccount();
+    }
+
 
 }
