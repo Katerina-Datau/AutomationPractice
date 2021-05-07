@@ -5,12 +5,9 @@ import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.net.PortUnreachableException;
 import java.util.Locale;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class CreateAccountPage extends BasePage {
@@ -60,6 +57,9 @@ public class CreateAccountPage extends BasePage {
     private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
     private static final By errCreateAccountError = By.cssSelector("//*[@id='create_account_error']/ol/li");
 
+    //status locators:
+    private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
+
 //TODO: no email, invalid email, existing email, incorrect ZIP
 
 
@@ -83,75 +83,70 @@ public class CreateAccountPage extends BasePage {
 
     //генератор правильного имейла:
 
-    public String createEmail (String email) {
+    public String createString(String generatedString) {
         FakeValuesService fakeValuesService = new FakeValuesService(
                 new Locale("en-GB"), new RandomService());
-        return fakeValuesService.bothify(email);
+        return fakeValuesService.bothify(generatedString);
     }
 
-    public String createValidEmail () {
-        return createEmail ("????##@##gmail.com");
+    public String createValidEmail() {
+        return createString("????##@##gmail.com");
     }
 
-    public String createInvalidEmailDoubleToad () {
-        return createEmail ("????##@@##gmail.com");
+    public String createInvalidEmailDoubleToad() {
+        return createString("????##@@##gmail.com");
     }
 
-    public String createInvalidEmailEndsWithDot () {
-        return createEmail ("?????##@##gmail.com.");
+    public String createInvalidEmailEndsWithDot() {
+        return createString("?????##@##gmail.com.");
     }
 
     public String createInvalidEmailStartsWithDot() {
-        return createEmail(".????##@##gmail.com");
+        return createString(".????##@##gmail.com");
     }
 
     public String createInvalidEmailNoSyntax() {
-        return createEmail("????####?????");
-    }
-    public String createInvalidEmailForbiddenDomainSymbols(char symbol) {
-        return   createEmail("????##@") + symbol + createEmail("???.???");
+        return createString("????####?????");
     }
 
-    public String emailAlreadyExists () {
-        return "doran.martell@dorne.wst";
+    public String createInvalidEmailForbiddenDomainSymbols(char symbol) {
+        return createString("????##@") + symbol + createString("???.???");
+    }
+
+    public String emailAlreadyExists() {
+        return "oberyn.martell@dorne.wst";
     }
 
     public void submitValidEmail(String createValidEmail) {
         driver.findElement(txtCreateByEmail).sendKeys(createValidEmail);
         driver.findElement(btnCreateAccount).click();
     }
-    //TODO c инвалидными имейлами:
+
+
     //1.@@
     //2. . в конце
     //3. без собаки и точки
     //4. неправильная раскладка
     //5. null email field
 
-    // все необходимые поля валидны
-
-    public void createValidAccount ()
-           // (String firstName, String lastName, String password, String addressFirstName, String addressLastName,
-            // String addressAddressLine1, String addressAddressLine2, String city, int stateValue, int zip, String country, String mobile)
-    {        Faker faker = new Faker();
+    public boolean createValidAccountOnlyRequiredFields() {
+        Faker faker = new Faker();
         driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
         driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
         driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
         driver.findElement(txtAddressFirstName).sendKeys(faker.cat().breed());
         driver.findElement(txtAddressLastName).sendKeys(faker.elderScrolls().lastName());
         driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
-        WebElement address2 = driver.findElement(txtAddressLine2);
-        if (address2.isDisplayed()) {
-            address2.sendKeys(faker.lordOfTheRings().location());
-        }
         driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
-        Select state = new Select(driver.findElement(sddAddressState));
-        state.selectByIndex((int) (Math.random()*54));
-        driver.findElement(txtAddressZip).sendKeys(faker.address().zipCode());
         new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
         driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
         driver.findElement(btnRegisterButton).click();
-    }
 
+        return driver.findElement(statusLoggedIn).isDisplayed();
+    }
 
 
 }

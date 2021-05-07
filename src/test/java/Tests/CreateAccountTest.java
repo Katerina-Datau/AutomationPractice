@@ -82,7 +82,15 @@ public class CreateAccountTest extends BaseTest {
 
     /**
      * 2. Account creation
+     * 2.1 Only required fields are filled with valid data
      */
-
-
+    @Test
+    public void createValidAccountRequiredFieldsOnly() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        Assert.assertTrue(createAccountPage.createValidAccountOnlyRequiredFields());
+    }
+    /**
+     * 2.2 All the fields filled with valid data, explicitly required and otherwise
+     */
 }
