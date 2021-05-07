@@ -5,8 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
-    private static final String loginPageURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String loggedInPageURL = "http://automationpractice.com/index.php?controller=my-account";
+    private static final String urlLoginPage = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
+    private static final String urlLoggedPage = "http://automationpractice.com/index.php?controller=my-account";
 
     private static final By txtEmail = By.id("email");
     private static final By txtPassword = By.id("passwd");
@@ -23,7 +23,7 @@ public class LoginPage extends BasePage {
     }
 
     public void openPage() {
-        driver.get(loginPageURL);
+        driver.get(urlLoginPage);
     }
 
 

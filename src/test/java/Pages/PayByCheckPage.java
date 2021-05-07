@@ -9,7 +9,7 @@ public class PayByCheckPage extends BasePage {
         super(driver);
     }
 
-    private static final String checkURL = "http://automationpractice.com/index.php?fc=module&module=cheque&controller=payment";
+    private static final String urlPayByCheck = "http://automationpractice.com/index.php?fc=module&module=cheque&controller=payment";
 
     //for BankWire:
     private static final By btnOrderConfirmation = By.xpath("//*[@id=\"cart_navigation\"]/button");

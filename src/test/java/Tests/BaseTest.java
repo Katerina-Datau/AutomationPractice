@@ -1,3 +1,5 @@
+package Tests;
+
 import Pages.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     WebDriver driver;
+    HomePage homePage;
     LoginPage loginPage;
     ShopWomenPage shopWomenPage;
     CartPage cartPage;
@@ -30,6 +33,7 @@ public class BaseTest {
         //fullscreen:
         driver.manage().window().maximize();
 
+        homePage = new HomePage(driver);
         createAccountPage = new CreateAccountPage(driver);
         loginPage = new LoginPage(driver);
         shopWomenPage = new ShopWomenPage(driver);
@@ -45,8 +49,11 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void closeBrowser() {
+        driver.manage().deleteAllCookies();
         driver.quit();
     }
+
+
 }
 
 

@@ -18,7 +18,7 @@ public class ShopWomenPage extends BasePage {
     }
 
     String productName;
-    private static final String shopPageWomenURL = "http://automationpractice.com/index.php?id_category=3&controller=category";
+    private static final String urlShopPageWomen = "http://automationpractice.com/index.php?id_category=3&controller=category";
 
 
     private static final By btnContinueShopping = By.xpath("//*[@title='Continue shopping']");
@@ -28,7 +28,7 @@ public class ShopWomenPage extends BasePage {
     private static final By btnOpenCart = By.className("cart_block");
 
     public void openShopPage() {
-        driver.get(shopPageWomenURL);
+        driver.get(urlShopPageWomen);
     }
 
     //Для элемента Blouse:

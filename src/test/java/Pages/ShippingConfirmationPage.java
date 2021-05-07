@@ -8,7 +8,7 @@ public class ShippingConfirmationPage extends BasePage {
         super(driver);
     }
 
-    private static final String shippingConfirmationPageURL = "http://automationpractice.com/index.php?controller=order";
+    private static final String urlShippingConfirmation = "http://automationpractice.com/index.php?controller=order";
     private static final By chbTermsOfServiceConfirmation = By.id("cgv");
     private static final By btnConfirmCarrier = By.name("processCarrier");
 

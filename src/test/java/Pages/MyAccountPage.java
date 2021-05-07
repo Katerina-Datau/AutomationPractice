@@ -9,7 +9,7 @@ public class MyAccountPage extends BasePage {
         super(driver);
     }
 
-    private static final String myAccountPageURL = "http://automationpractice.com/index.php?controller=my-account";
+    private static final String urlMyAccountPage = "http://automationpractice.com/index.php?controller=my-account";
 
     private static final By btnOrderHistoryAndDetails = By.className("icon-list-ol");
     private static final By btnCreditSlips = By.className("icon-ban-circle");
@@ -17,9 +17,11 @@ public class MyAccountPage extends BasePage {
     private static final By btnPersonalInfo = By.className("icon-user");
     private static final By btnWishlist = By.className("icon-heart");
 
-
+    /**
+     * bjdfdfjgidj
+     */
     public void openMyAccountPage() {
-        driver.get(myAccountPageURL);
+        driver.get(urlMyAccountPage);
     }
 
     public void acc() {

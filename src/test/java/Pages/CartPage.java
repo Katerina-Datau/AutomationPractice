@@ -9,7 +9,7 @@ import org.testng.Assert;
 public class CartPage extends BasePage {
 
 
-    private static final String cartPageURL = "http://automationpractice.com/index.php?controller=order";
+    private static final String urlCartPage = "http://automationpractice.com/index.php?controller=order";
 
     private static final By txtProductQuantity = By.id("summary_products_quantity");
     private static final By txtPriceSansShipping = By.id("total_product");
@@ -28,7 +28,7 @@ public class CartPage extends BasePage {
     }
 
     public void openPage() {
-        driver.get(cartPageURL);
+        driver.get(urlCartPage);
     }
 
     public void validateNumberOfItemsInCart(int itemsInCart) {

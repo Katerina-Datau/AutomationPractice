@@ -8,7 +8,7 @@ public class AddressesCheckoutPage extends BasePage {
         super(driver);
     }
 
-    private static final String shippingAddresses = "http://automationpractice.com/index.php?controller=order&step=1&multi-shipping=0";
+    private static final String urlShippingAddresses = "http://automationpractice.com/index.php?controller=order&step=1&multi-shipping=0";
     private static final By btnConfirmAddress = By.name("processAddress");
 
 }

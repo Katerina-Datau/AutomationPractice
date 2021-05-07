@@ -1,13 +1,17 @@
 package Pages;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.net.PortUnreachableException;
+import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccountPage extends BasePage {
 
@@ -16,8 +20,8 @@ public class CreateAccountPage extends BasePage {
     }
 
     //TODO подключить рандомные номера и имейлы со сторонних сайтов?
-    private static final String createAccountURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String createAccountDirectURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
+
+    private static final String urlCreateAccount = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
     private static final By txtCreateByEmail = By.id("email_create");
     private static final By btnCreateAccount = By.id("SubmitCreate");
     private static final By chbMale = By.id("id_gender1");
@@ -50,6 +54,8 @@ public class CreateAccountPage extends BasePage {
     private static final By txtMobilePhone = By.id("phone_mobile");
     private static final By btnRegisterButton = By.id("submitAccount");
 
+    //private static final By locAccountCreationForm = By.id("account-creation_form");
+
     //error locators:
     private static final By errCreateEmailError = By.id("create_account_error");
     private static final By errCreateAccountError = By.cssSelector("div[class='alert alert-danger']");
@@ -58,29 +64,31 @@ public class CreateAccountPage extends BasePage {
 
 
     public void openPage() {
-        driver.get(createAccountURL);
+        driver.get(urlCreateAccount);
     }
 
-    //рандомная строка из количества букв:
-    public String createString(int length) {
-        StringBuilder bldrSymbols = new StringBuilder();
-        for (int i = 0, n = length; i < n; i++) {
-            bldrSymbols.append('a' + Math.random() * 26);
-        }
-        return bldrSymbols.toString();
+    public boolean validateEmail(String emailAddress) {
+        driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
+        driver.findElement(btnCreateAccount).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        return driver.findElement(chbMale).isDisplayed();
     }
 
-    //1-5 букв+@+1-5 букв+.+1-5 букв
-    public String createValidEmail() {
-        StringBuilder bldrValidEmail = new StringBuilder();
-        Random rndValidEmail = new Random();
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        bldrValidEmail.append('@');
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        bldrValidEmail.append('.');
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        return bldrValidEmail.toString();
+    //генератор правильного имейла:
+    public String createValidEmail () {
+        FakeValuesService fakeValuesService = new FakeValuesService(
+                new Locale("en-GB"), new RandomService());
+
+        String email = fakeValuesService.bothify("????##@##gmail.com");
+        return email;
     }
+
+
+
+
+
+    //String email = fakeValuesService.bothify("????##@gmail.com");
+   // Matcher emailMatcher = Pattern.compile("\\w{4}\\d{2}@gmail.com").matcher(email);
 
 
     //TODO String createinvalidemail

@@ -1,3 +1,6 @@
+package Tests;
+
+import Tests.BaseTest;
 import org.testng.annotations.Test;
 
 public class AutomationPracticeShopTest extends BaseTest {
@@ -5,12 +8,12 @@ public class AutomationPracticeShopTest extends BaseTest {
     //TODO тест на проверку правильности вычисления скидки?
     //TODO подключить рандомизатор имейла-пароля
 
-    @Test
-    public void authtest() {
-        createAccountPage.openPage();
-        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
-
-    }
+  //  @Test
+    //public void authtest() {
+   //     createAccountPage.openPage();
+  //      createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+//
+    //}
 
 
     @Test
@@ -41,12 +44,20 @@ public class AutomationPracticeShopTest extends BaseTest {
     }
 
     //тест валидный имейл:
+  //  @Test
+   // public void dsj() {
+  //      createAccountPage.openPage();
+ //       createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+  //      createAccountPage.createValidAccount();
+ //       //assertequals
+  //  }
+
     @Test
-    public void dsj() {
-        createAccountPage.openPage();
-        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
-        createAccountPage.createValidAccount();
+    public void bjh() {
+
+        createAccountPage.createValidEmail();
     }
+
 
 
 }
