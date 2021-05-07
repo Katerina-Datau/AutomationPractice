@@ -57,8 +57,8 @@ public class CreateAccountPage extends BasePage {
     //private static final By locAccountCreationForm = By.id("account-creation_form");
 
     //error locators:
-    private static final By errCreateEmailError = By.id("create_account_error");
-    private static final By errCreateAccountError = By.cssSelector("div[class='alert alert-danger']");
+    private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
+    private static final By errCreateAccountError = By.cssSelector("//*[@id='create_account_error']/ol/li");
 
 //TODO: no email, invalid email, existing email, incorrect ZIP
 
@@ -67,31 +67,54 @@ public class CreateAccountPage extends BasePage {
         driver.get(urlCreateAccount);
     }
 
-    public boolean validateEmail(String emailAddress) {
+    public boolean tryValidEmail(String emailAddress) {
         driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
         driver.findElement(btnCreateAccount).click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver.findElement(chbMale).isDisplayed();
     }
 
-    //генератор правильного имейла:
-    public String createValidEmail () {
-        FakeValuesService fakeValuesService = new FakeValuesService(
-                new Locale("en-GB"), new RandomService());
-
-        String email = fakeValuesService.bothify("????##@##gmail.com");
-        return email;
+    public String tryWrongEmail(String emailAddress) {
+        driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
+        driver.findElement(btnCreateAccount).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        return driver.findElement(errCreateEmailError).getText();
     }
 
+    //генератор правильного имейла:
 
+    public String createEmail (String email) {
+        FakeValuesService fakeValuesService = new FakeValuesService(
+                new Locale("en-GB"), new RandomService());
+        return fakeValuesService.bothify(email);
+    }
 
+    public String createValidEmail () {
+        return createEmail ("????##@##gmail.com");
+    }
 
+    public String createInvalidEmailDoubleToad () {
+        return createEmail ("????##@@##gmail.com");
+    }
 
-    //String email = fakeValuesService.bothify("????##@gmail.com");
-   // Matcher emailMatcher = Pattern.compile("\\w{4}\\d{2}@gmail.com").matcher(email);
+    public String createInvalidEmailEndsWithDot () {
+        return createEmail ("?????##@##gmail.com.");
+    }
 
+    public String createInvalidEmailStartsWithDot() {
+        return createEmail(".????##@##gmail.com");
+    }
 
-    //TODO String createinvalidemail
+    public String createInvalidEmailNoSyntax() {
+        return createEmail("????####?????");
+    }
+    public String createInvalidEmailForbiddenDomainSymbols(char symbol) {
+        return   createEmail("????##@") + symbol + createEmail("???.???");
+    }
+
+    public String emailAlreadyExists () {
+        return "doran.martell@dorne.wst";
+    }
 
     public void submitValidEmail(String createValidEmail) {
         driver.findElement(txtCreateByEmail).sendKeys(createValidEmail);
