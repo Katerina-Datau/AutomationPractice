@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ShopWomenPage extends BasePage {
 
-    //что за айди homefeatured? Выдается в составе xpath, если на странице магазина название продукта - ПКМ - copy xpath сделать
-
     public ShopWomenPage(WebDriver driver) {
         super(driver);
     }

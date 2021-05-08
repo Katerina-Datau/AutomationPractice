@@ -8,10 +8,10 @@ public class AutomationPracticeShopTest extends BaseTest {
     //TODO тест на проверку правильности вычисления скидки?
     //TODO подключить рандомизатор имейла-пароля
 
-  //  @Test
+    //  @Test
     //public void authtest() {
-   //     createAccountPage.openPage();
-  //      createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+    //     createAccountPage.openPage();
+    //      createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
 //
     //}
 
@@ -44,20 +44,19 @@ public class AutomationPracticeShopTest extends BaseTest {
     }
 
     //тест валидный имейл:
-  //  @Test
-   // public void dsj() {
-  //      createAccountPage.openPage();
- //       createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
-  //      createAccountPage.createValidAccount();
- //       //assertequals
-  //  }
+    //  @Test
+    // public void dsj() {
+    //      createAccountPage.openPage();
+    //       createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+    //      createAccountPage.createValidAccount();
+    //       //assertequals
+    //  }
 
     @Test
     public void bjh() {
 
         createAccountPage.createValidEmail();
     }
-
 
 
 }

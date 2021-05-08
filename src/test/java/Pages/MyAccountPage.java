@@ -17,9 +17,6 @@ public class MyAccountPage extends BasePage {
     private static final By btnPersonalInfo = By.className("icon-user");
     private static final By btnWishlist = By.className("icon-heart");
 
-    /**
-     * bjdfdfjgidj
-     */
     public void openMyAccountPage() {
         driver.get(urlMyAccountPage);
     }

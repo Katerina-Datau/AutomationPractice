@@ -1,7 +1,11 @@
 package Tests;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccountTest extends BaseTest {
 
@@ -90,7 +94,31 @@ public class CreateAccountTest extends BaseTest {
         createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
         Assert.assertTrue(createAccountPage.createValidAccountOnlyRequiredFields());
     }
+
     /**
      * 2.2 All the fields filled with valid data, explicitly required and otherwise
      */
+    @Test
+    public void createValidAccountAllFields() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        Assert.assertTrue(createAccountPage.createValidAccountAllTheFields());
+    }
+
+    /**
+     * 2.3. All the fields null
+     */
+    @Test
+    public void createNullAccount() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        List<WebElement> actualErrorList = createAccountPage.createNullAccount();
+        Assert.assertEquals(actualErrorList.size(), 11);
+        Assert.assertTrue(createAccountPage.findError(actualErrorList, "You must register at least one phone number."));
+        Assert.assertTrue(createAccountPage.findError(actualErrorList, "lastname is required."));
+        Assert.assertTrue(createAccountPage.findError(actualErrorList, "firstname is required."));
+
+    }
+
+
 }

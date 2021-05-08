@@ -11,7 +11,6 @@ public class PayByCheckPage extends BasePage {
 
     private static final String urlPayByCheck = "http://automationpractice.com/index.php?fc=module&module=cheque&controller=payment";
 
-    //for BankWire:
     private static final By btnOrderConfirmation = By.xpath("//*[@id=\"cart_navigation\"]/button");
     private static final By btnOtherPaymentMethod = By.xpath("//*[@id=\"cart_navigation\"]/a");
     private static final By txtTotalPrice = By.id("amount");
