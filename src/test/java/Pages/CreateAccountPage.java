@@ -17,8 +17,6 @@ public class CreateAccountPage extends BasePage {
         super(driver);
     }
 
-    //TODO подключить рандомные номера и имейлы со сторонних сайтов?
-
     private static final String urlCreateAccount = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
     private static final By txtCreateByEmail = By.id("email_create");
     private static final By btnCreateAccount = By.id("SubmitCreate");
@@ -30,7 +28,6 @@ public class CreateAccountPage extends BasePage {
     //private static final By txtCreateEmail = By.cssSelector("input#email");
     // - переносится из предыдущей стрраниицы, нужно ли?
     private static final By txtCreatePassword = By.id("passwd");
-    //дропдауны через option value == PROFIT?
     private static final By sddBirthDay = By.id("days");
     private static final By sddBirthMonth = By.id("months");
     private static final By sddBirthYear = By.id("years");
@@ -63,9 +60,6 @@ public class CreateAccountPage extends BasePage {
     //status locators:
     private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
 
-//TODO: no email, invalid email, existing email, incorrect ZIP
-
-
     public void openPage() {
         driver.get(urlCreateAccount);
     }
@@ -84,7 +78,7 @@ public class CreateAccountPage extends BasePage {
         return driver.findElement(errCreateEmailError).getText();
     }
 
-    //генератор правильного имейла:
+    //генератор String:
 
     public String createString(String generatedString) {
         FakeValuesService fakeValuesService = new FakeValuesService(
@@ -124,13 +118,6 @@ public class CreateAccountPage extends BasePage {
         driver.findElement(txtCreateByEmail).sendKeys(createValidEmail);
         driver.findElement(btnCreateAccount).click();
     }
-
-
-    //1.@@
-    //2. . в конце
-    //3. без собаки и точки
-    //4. неправильная раскладка
-    //5. null email field
 
     public boolean createValidAccountOnlyRequiredFields() {
         Faker faker = new Faker();

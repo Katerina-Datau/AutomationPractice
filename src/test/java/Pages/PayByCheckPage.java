@@ -15,6 +15,4 @@ public class PayByCheckPage extends BasePage {
     private static final By btnOtherPaymentMethod = By.xpath("//*[@id=\"cart_navigation\"]/a");
     private static final By txtTotalPrice = By.id("amount");
     private static final By txtCurrency = By.className("currency_payement");
-
-
 }

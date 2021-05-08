@@ -25,7 +25,7 @@ public class ShopWomenPage extends BasePage {
     //? локатор!
     private static final By btnOpenCart = By.className("cart_block");
 
-    public void openShopPage() {
+    public void openPage() {
         driver.get(urlShopPageWomen);
     }
 
@@ -34,8 +34,6 @@ public class ShopWomenPage extends BasePage {
 
     //или wishlistProd_1
     public void addToCart(String ProductName) {
-
-
         Actions actions = new Actions(driver);
 
         WebElement locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + ProductName + "']"));

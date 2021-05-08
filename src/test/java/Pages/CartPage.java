@@ -8,7 +8,6 @@ import org.testng.Assert;
 
 public class CartPage extends BasePage {
 
-
     private static final String urlCartPage = "http://automationpractice.com/index.php?controller=order";
 
     private static final By txtProductQuantity = By.id("summary_products_quantity");

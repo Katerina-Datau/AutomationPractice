@@ -23,7 +23,7 @@ public class AutomationPracticeShopTest extends BaseTest {
         loginPage.login("camine.kerfi.5f@bookarest.site", "camine.kerfi.5f@bookarest.site");
 
         //shopPageWomen.browseShop();
-        shopWomenPage.openShopPage();
+        shopWomenPage.openPage();
         shopWomenPage.addToCart("Blouse");
 
 
@@ -39,7 +39,7 @@ public class AutomationPracticeShopTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("camine.kerfi.5f@bookarest.site", "camine.kerfi.5f@bookarest.site");
 
-        myAccountPage.openMyAccountPage();
+        myAccountPage.openPage();
         myAccountPage.acc();
     }
 

@@ -44,7 +44,6 @@ public class BaseTest {
         payByWirePage = new PayByWirePage(driver);
         payByCheckPage = new PayByCheckPage(driver);
         shippingConfirmationPage = new ShippingConfirmationPage(driver);
-
     }
 
     @AfterMethod(alwaysRun = true)
@@ -52,7 +51,6 @@ public class BaseTest {
         driver.manage().deleteAllCookies();
         driver.quit();
     }
-
 
 }
 
