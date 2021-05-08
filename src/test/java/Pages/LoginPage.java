@@ -26,7 +26,6 @@ public class LoginPage extends BasePage {
         driver.get(urlLoginPage);
     }
 
-
     public void login(String emailAddress, String password) {
         driver.findElement(txtEmail).sendKeys(emailAddress);
         driver.findElement(txtPassword).sendKeys(password);

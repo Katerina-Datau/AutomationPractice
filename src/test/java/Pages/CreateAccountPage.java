@@ -5,7 +5,9 @@ import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,10 +54,9 @@ public class CreateAccountPage extends BasePage {
 
     //private static final By locAccountCreationForm = By.id("account-creation_form");
 
-    //error locators:
+    //errors:
     private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
     private static final By errCreateAccountError = By.xpath("//*[@id='center_column']/div/ol/li");
-
 
     //status locators:
     private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
@@ -119,6 +120,12 @@ public class CreateAccountPage extends BasePage {
         driver.findElement(btnCreateAccount).click();
     }
 
+    public void waitUntilCanSubmit() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnRegisterButton));
+    }
+
+
     public boolean createValidAccountOnlyRequiredFields() {
         Faker faker = new Faker();
         driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
@@ -165,39 +172,17 @@ public class CreateAccountPage extends BasePage {
         return driver.findElement(statusLoggedIn).isDisplayed();
     }
 
-    //TODO nullaccount!!!
     public List<WebElement> createNullAccount() {
-        WebElement toClear = driver.findElement(txtCreateEmail);
-        //скролл вниз через Javascript Executor
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", toClear);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value = '';", toClear);
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        driver.findElement(txtCreateEmail).clear();
         new Select(driver.findElement(sddAddressCountry)).selectByIndex(0);
         driver.findElement(txtAddressAlias).clear();
         driver.findElement(btnRegisterButton).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         List<WebElement> allErrors = driver.findElements(errCreateAccountError);
         return allErrors;
     }
 
-    public boolean findError(List<WebElement> allErrors, String findText) {
-        for (int i = 0; i < allErrors.size(); i++) {
-            if (allErrors.get(i).getText().equals(findText)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 }
+
+

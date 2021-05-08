@@ -5,7 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CreateAccountTest extends BaseTest {
 
@@ -26,7 +25,6 @@ public class CreateAccountTest extends BaseTest {
     public void invalidEmailDoubleToad() {
         createAccountPage.openPage();
         Assert.assertEquals(createAccountPage.tryWrongEmail(createAccountPage.createInvalidEmailDoubleToad()), "Invalid email address.");
-
     }
 
     /**
@@ -112,13 +110,23 @@ public class CreateAccountTest extends BaseTest {
     public void createNullAccount() {
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
         List<WebElement> actualErrorList = createAccountPage.createNullAccount();
         Assert.assertEquals(actualErrorList.size(), 11);
-        Assert.assertTrue(createAccountPage.findError(actualErrorList, "You must register at least one phone number."));
-        Assert.assertTrue(createAccountPage.findError(actualErrorList, "lastname is required."));
-        Assert.assertTrue(createAccountPage.findError(actualErrorList, "firstname is required."));
-
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "You must register at least one phone number."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "lastname is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "firstname is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "email is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "passwd is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "id_country is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "alias is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "address1 is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "city is required."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Country cannot be loaded with address->id_country"));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Country is invalid"));
     }
+
+    //TODO case # 4-16
 
 
 }
