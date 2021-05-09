@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +19,9 @@ public class HomePage extends BasePage {
     private static final String urlHomePage = "http://automationpractice.com/index.php";
     private static final By txtSearchBar = By.id("search_query_top");
     private static final By btnSearchButton = By.name("submit_search");
+    private static final By btnResultsInList = By.cssSelector(".icon-th-list");
+    //TODO переписать локатор на море бтн!
+    private static final By btnMore = By.cssSelector(".lnk_view");
     private static final By txtSearchResultsCount = By.className("heading-counter");
     private static final By txtErrorAlert = By.className("alert-warning");
     private static final By searchResultList = By.cssSelector("ul.product_list img.replace-2x");
@@ -28,12 +32,21 @@ public class HomePage extends BasePage {
         driver.get(urlHomePage);
     }
 
-    public void searchForText(String query) {
+        public void searchForText(String query) {
         driver.findElement(txtSearchBar).sendKeys(query);
     }
 
     public void submitSearch() {
         driver.findElement(btnSearchButton).click();
+    }
+
+    public void resultsByList() {
+        driver.findElement(btnResultsInList).click();
+    }
+
+    //TODO переписать на стабильный
+    public void pressMore() {
+        driver.findElement(btnMore).click();
     }
 
     public String getError() {
@@ -42,6 +55,14 @@ public class HomePage extends BasePage {
 
     public String getResultCount() {
         return driver.findElement(txtSearchResultsCount).getText();
+    }
+
+    public void pressEnter() {
+        driver.findElement(txtSearchBar).sendKeys(Keys.ENTER);
+    }
+
+    public void pressReturn() {
+        driver.findElement(txtSearchBar).sendKeys(Keys.RETURN);
     }
 
     public List<String> findItem() {

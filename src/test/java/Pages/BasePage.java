@@ -23,5 +23,10 @@ public class BasePage {
         return false;
     }
 
+    /**
+     * credentials:
+     * email oberyn.martell@dorne.wst
+     * password unbent111
+     */
 }
 

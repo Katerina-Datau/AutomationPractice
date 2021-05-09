@@ -16,6 +16,15 @@ public class LoginPage extends BasePage {
     private static final By btnLogOut = By.className("logout");
     private static final By btnLogIn = By.className("login");
 
+    /**
+     * status locators:
+     */
+    private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
+
+    /**
+     * errors:
+     */
+
     private static final By errLoginError = By.className("alert alert-danger").tagName("ol");
 
     public LoginPage(WebDriver driver) {
@@ -31,7 +40,10 @@ public class LoginPage extends BasePage {
         driver.findElement(txtPassword).sendKeys(password);
         driver.findElement(btnLogin).click();
     }
-//TODO: no details, no email, no password, incorrect details, correct details
-    //TODO: retrieve password: no email, incorrect email, correct email
+
+    public boolean ifLoggedIn() {
+        return driver.findElement(statusLoggedIn).isDisplayed();
+    }
+
 
 }
