@@ -18,21 +18,23 @@ public class ShopWomenPage extends BasePage {
     String productName;
     private static final String urlShopPageWomen = "http://automationpractice.com/index.php?id_category=3&controller=category";
 
-
     private static final By btnContinueShopping = By.xpath("//*[@title='Continue shopping']");
     private static final By btnProceedToCheckout = By.xpath("//*[@title='Proceed to checkout']");
 
     //? локатор!
     private static final By btnOpenCart = By.className("cart_block");
 
-    public void openPage() {
-        driver.get(urlShopPageWomen);
-    }
+
 
     //Для элемента Blouse:
     public static final By btnAddToWishlist = By.className("addToWishlist");
 
     //или wishlistProd_1
+
+    public void openPage() {
+        driver.get(urlShopPageWomen);
+    }
+
     public void addToCart(String ProductName) {
         Actions actions = new Actions(driver);
 

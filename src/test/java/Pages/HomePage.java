@@ -58,7 +58,7 @@ public class HomePage extends BasePage {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(ddAutoCompleteResults));
     }
 
-    public boolean acAbides() {
+    public boolean acVisible() {
         return driver.findElement(ddAutoCompleteResults).isDisplayed();
     }
 
@@ -70,6 +70,5 @@ public class HomePage extends BasePage {
         }
         return urlList;
     }
-
 
 }

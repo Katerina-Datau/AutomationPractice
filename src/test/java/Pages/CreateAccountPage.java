@@ -43,7 +43,6 @@ public class CreateAccountPage extends BasePage {
     //скрытый локатор второго адреса!
     private static final By txtAddressCity = By.id("city");
     private static final By sddAddressState = By.id("id_state");
-    //ZIP - 5 numbers
     private static final By txtAddressZip = By.id("postcode");
     private static final By sddAddressCountry = By.id("id_country");
     private static final By txtAdditionalInfo = By.id("other");
@@ -52,13 +51,15 @@ public class CreateAccountPage extends BasePage {
     private static final By txtMobilePhone = By.id("phone_mobile");
     private static final By btnRegisterButton = By.id("submitAccount");
 
-    //private static final By locAccountCreationForm = By.id("account-creation_form");
-
-    //errors:
+    /**
+     * errors:
+     */
     private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
     private static final By errCreateAccountError = By.xpath("//*[@id='center_column']/div/ol/li");
 
-    //status locators:
+    /**
+     * status locators:
+     */
     private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
 
     public void openPage() {
@@ -79,7 +80,12 @@ public class CreateAccountPage extends BasePage {
         return driver.findElement(errCreateEmailError).getText();
     }
 
-    //генератор String:
+    /**
+     * String generator:
+     *
+     * @param generatedString
+     * @return
+     */
 
     public String createString(String generatedString) {
         FakeValuesService fakeValuesService = new FakeValuesService(
@@ -125,7 +131,6 @@ public class CreateAccountPage extends BasePage {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnRegisterButton));
     }
 
-
     public boolean createValidAccountOnlyRequiredFields() {
         Faker faker = new Faker();
         driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
@@ -139,7 +144,6 @@ public class CreateAccountPage extends BasePage {
         driver.findElement(txtAddressZip).sendKeys(createString("#####"));
         driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
         driver.findElement(btnRegisterButton).click();
-
         return driver.findElement(statusLoggedIn).isDisplayed();
     }
 
@@ -168,7 +172,6 @@ public class CreateAccountPage extends BasePage {
         driver.findElement(txtHomePhone).sendKeys(createString("+###########"));
         driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
         driver.findElement(btnRegisterButton).click();
-
         return driver.findElement(statusLoggedIn).isDisplayed();
     }
 
@@ -182,7 +185,252 @@ public class CreateAccountPage extends BasePage {
         return allErrors;
     }
 
+    public List<WebElement> numericalNames() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(createString("#######"));
+        driver.findElement(txtCustomerLastName).sendKeys(createString("#######"));
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
 
+    public List<WebElement> forbiddenSymbolNames() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys("#%orge");
+        driver.findElement(txtCustomerLastName).sendKeys("#%@!$()son");
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> namesOverLimit() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(createString("???????????????????????????????????"));
+        driver.findElement(txtCustomerLastName).sendKeys(createString("???????????????????????????????????"));
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> shortPassword() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(createString("#?#"));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> invalidDate() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        new Select(driver.findElement(sddBirthDay)).selectByValue("31");
+        new Select(driver.findElement(sddBirthMonth)).selectByValue("2");
+        new Select(driver.findElement(sddBirthYear)).selectByValue("1980");
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> nullYear() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        new Select(driver.findElement(sddBirthDay)).selectByValue(String.format("%s", (int) (Math.random() * 28) + 1));
+        new Select(driver.findElement(sddBirthMonth)).selectByValue(String.format("%s", (int) (Math.random() * 12) + 1));
+        new Select(driver.findElement(sddBirthYear)).selectByIndex(0);
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> cityOverLimit() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(createString("##################################################################################################################################################################"));
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> cityForbidden() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys("$ @ # % = +");
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> noState() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        new Select(driver.findElement(sddAddressState)).selectByIndex(0);
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> wrongZip() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####??"));
+        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> alphabetPhone() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(createString("###########"));
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> cellOverLimit() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtMobilePhone).sendKeys(createString("######################################"));
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
+
+    public List<WebElement> isCellRequired() {
+        Faker faker = new Faker();
+        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
+        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
+        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
+        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
+        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
+        Select state = new Select(driver.findElement(sddAddressState));
+        state.selectByIndex((int) (Math.random() * 53 + 1));
+        driver.findElement(txtAddressZip).sendKeys(createString("#####"));
+        driver.findElement(txtHomePhone).sendKeys(faker.phoneNumber().cellPhone());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
 }
+
+
+
+
+
+
+
+
 
 

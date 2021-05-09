@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccountTest extends BaseTest {
 
@@ -126,7 +127,177 @@ public class CreateAccountTest extends BaseTest {
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Country is invalid"));
     }
 
-    //TODO case # 4-16
+    /**
+     * 2.4 Numbers in name fields
+     */
+    @Test
+    public void numericalNames() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.numericalNames();
+        Assert.assertEquals(actualErrorList.size(), 2);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "lastname is invalid."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "firstname is invalid."));
+    }
 
+    /**
+     * 2.5 Forbidden symbols in names
+     */
+    @Test
+    public void forbiddenSymbolNames() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.forbiddenSymbolNames();
+        Assert.assertEquals(actualErrorList.size(), 2);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "lastname is invalid."));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "firstname is invalid."));
+    }
+
+    /**
+     * 2.6 Names over character limit
+     */
+    @Test
+    public void namesOverCharacterLimit() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.namesOverLimit();
+        Assert.assertEquals(actualErrorList.size(), 2);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "lastname is too long. Maximum length: 32"));
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "firstname is too long. Maximum length: 32"));
+    }
+
+    /**
+     * 2.7 Password less than 5 characters
+     */
+    @Test
+    public void passwordTooShort() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.shortPassword();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "passwd is invalid."));
+    }
+
+    /**
+     * 2.8 Incorrect birthday
+     */
+    @Test
+    public void incorrectBirthday() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.invalidDate();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid date of birth"));
+    }
+
+    /**
+     * 2.9 Null year of birth
+     */
+    @Test
+    public void nullYear() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.nullYear();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid date of birth"));
+    }
+
+    /**
+     * 2.10 City name over limit
+     */
+    @Test
+    public void cityOverLimit() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.cityOverLimit();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "city is too long. Maximum length: 64"));
+    }
+
+    /**
+     * 2.11 Forbidden symbols in city name
+     */
+    @Test
+    public void cityForbidden() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.cityForbidden();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "city is invalid."));
+    }
+
+    /**
+     * 2.12 No state selected
+     */
+    @Test
+    public void noStateSelected() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.noState();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "This country requires you to choose a State."));
+    }
+
+    /**
+     * 2.13 Invalid Zip
+     */
+    @Test
+    public void wrongZip() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.wrongZip();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "The Zip/Postal code you've entered is invalid. It must follow this format: 00000"));
+    }
+
+    /**
+     * 2.14 Wrong cellphone number
+     */
+    @Test
+    public void wrongCell() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.alphabetPhone();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "phone is invalid."));
+    }
+
+    /**
+     * 2.15 Phone number over limit
+     */
+    @Test
+    public void cellOverLimit() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.cellOverLimit();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "phone_mobile is too long. Maximum length: 32"));
+    }
+
+    /**
+     * 2.16 Check if cellphone is truly required, throws AssertionError as home phone is enough
+     */
+    @Test
+    public void isCellRequired() {
+        createAccountPage.openPage();
+        createAccountPage.submitValidEmail(createAccountPage.createValidEmail());
+        createAccountPage.waitUntilCanSubmit();
+        List<WebElement> actualErrorList = createAccountPage.isCellRequired();
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "You must register at least one phone number"));
+    }
 
 }

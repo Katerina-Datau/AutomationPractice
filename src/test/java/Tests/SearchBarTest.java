@@ -1,12 +1,9 @@
 package Tests;
 
-import Pages.HomePage;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SearchBarTest extends BaseTest {
 
@@ -43,14 +40,14 @@ public class SearchBarTest extends BaseTest {
 
     //TODO cases # 3-7
 
-    @Test
+        @Test
     public void autoCompleteTest() {
         homePage.openPage();
         homePage.searchForText("sum");
         homePage.ifACIsVisible();
 
 
-        Assert.assertTrue(homePage.acAbides());
+        Assert.assertTrue(homePage.acVisible());
         List<String> actualResultList = homePage.findACResult();
         Assert.assertTrue(actualResultList.contains("Summer Dresses > Printed Summer Dress"));
         Assert.assertTrue(actualResultList.contains("Summer Dresses > Printed Chiffon Dress"));
