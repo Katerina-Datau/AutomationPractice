@@ -1,13 +1,15 @@
 package Pages;
 
-import com.github.javafaker.Faker;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.net.PortUnreachableException;
-import java.util.Random;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccountPage extends BasePage {
 
@@ -15,24 +17,22 @@ public class CreateAccountPage extends BasePage {
         super(driver);
     }
 
-    //TODO подключить рандомные номера и имейлы со сторонних сайтов?
-    private static final String createAccountURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String createAccountDirectURL = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
+    private static final String urlCreateAccount = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
     private static final By txtCreateByEmail = By.id("email_create");
     private static final By btnCreateAccount = By.id("SubmitCreate");
-    private static final By chbMale = By.id("id_gender1");
-    private static final By chbFemale = By.id("id_gender2");
+    private static final By cbMale = By.id("id_gender1");
+    private static final By cbFemale = By.id("id_gender2");
     private static final By txtCustomerFirstName = By.id("customer_firstname");
     private static final By txtCustomerLastName = By.id("customer_lastname");
     private static final By txtCreateEmail = By.id("email");
+    //private static final By txtCreateEmail = By.cssSelector("input#email");
     // - переносится из предыдущей стрраниицы, нужно ли?
     private static final By txtCreatePassword = By.id("passwd");
-    //дропдауны через option value == PROFIT?
     private static final By sddBirthDay = By.id("days");
-    private static final By sddBirtMonth = By.id("months");
+    private static final By sddBirthMonth = By.id("months");
     private static final By sddBirthYear = By.id("years");
-    private static final By chbNewsletterSignUp = By.id("newsletter");
-    private static final By chbSpecialOffers = By.id("optin");
+    private static final By cbNewsletterSignUp = By.id("newsletter");
+    private static final By cbSpecialOffers = By.id("optin");
     private static final By txtAddressFirstName = By.id("firstname");
     private static final By txtAddressLastName = By.id("lastname");
     private static final By txtAddressCompanyName = By.id("company");
@@ -41,7 +41,7 @@ public class CreateAccountPage extends BasePage {
     //скрытый локатор второго адреса!
     private static final By txtAddressCity = By.id("city");
     private static final By sddAddressState = By.id("id_state");
-    //ZIP - 5 numbers
+    private static final By sddAddressStateOption = By.cssSelector("#id_state option");
     private static final By txtAddressZip = By.id("postcode");
     private static final By sddAddressCountry = By.id("id_country");
     private static final By txtAdditionalInfo = By.id("other");
@@ -50,77 +50,118 @@ public class CreateAccountPage extends BasePage {
     private static final By txtMobilePhone = By.id("phone_mobile");
     private static final By btnRegisterButton = By.id("submitAccount");
 
-    //error locators:
-    private static final By errCreateEmailError = By.id("create_account_error");
-    private static final By errCreateAccountError = By.cssSelector("div[class='alert alert-danger']");
+    /**
+     * errors:
+     */
+    private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
+    private static final By errCreateAccountError = By.xpath("//*[@id='center_column']/div/ol/li");
 
-//TODO: no email, invalid email, existing email, incorrect ZIP
+    /**
+     * status locators:
+     */
+    private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
 
-
+    @Step("Opening account creation page")
     public void openPage() {
-        driver.get(createAccountURL);
+        driver.get(urlCreateAccount);
     }
 
-    //рандомная строка из количества букв:
-    public String createString(int length) {
-        StringBuilder bldrSymbols = new StringBuilder();
-        for (int i = 0, n = length; i < n; i++) {
-            bldrSymbols.append('a' + Math.random() * 26);
-        }
-        return bldrSymbols.toString();
+    //TODO StringUtils, tryEmail туда
+    //TODO генерить фейкеры в test (создать параметры в методах)
+
+    @Step("Putting a valid email '{emailAddress}' into email field")
+    public boolean tryValidEmail(String emailAddress) {
+        submitEmail(emailAddress);
+        return driver.findElement(cbMale).isDisplayed();
     }
 
-    //1-5 букв+@+1-5 букв+.+1-5 букв
-    public String createValidEmail() {
-        StringBuilder bldrValidEmail = new StringBuilder();
-        Random rndValidEmail = new Random();
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        bldrValidEmail.append('@');
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        bldrValidEmail.append('.');
-        bldrValidEmail.append(createString(rndValidEmail.nextInt(5) + 1));
-        return bldrValidEmail.toString();
+    @Step("Putting an invalid email '{emailAddress}' into email field")
+    public String tryWrongEmail(String emailAddress) {
+        submitEmail(emailAddress);
+        return driver.findElement(errCreateEmailError).getText();
     }
 
+    @Step("Putting an email '{}' into field")
+    public void submitEmail(String emailAddress) {
+        driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
+        driver.findElement(btnCreateAccount).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
 
-    //TODO String createinvalidemail
+    public void waitUntilCanSubmit() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(btnRegisterButton));
+    }
 
+    public void waitUntilStateSelectable() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(sddAddressStateOption));
+    }
+
+    @Step("Submitting a valid email")
     public void submitValidEmail(String createValidEmail) {
         driver.findElement(txtCreateByEmail).sendKeys(createValidEmail);
         driver.findElement(btnCreateAccount).click();
     }
-    //TODO c инвалидными имейлами:
-    //1.@@
-    //2. . в конце
-    //3. без собаки и точки
-    //4. неправильная раскладка
-    //5. null email field
 
-    // все необходимые поля валидны
+    @Step("Creating an account")
+    public void createAccount(String gender, String firstName, String lastName, String password,
+                              String birthDay, String birthMonth, String birthYear,
+                              boolean subscribe, boolean getOffers,
+                              String companyName, String address1, String address2, String city, int country,
+                              int state, String zip, String homePhone, String mobilePhone, String alias) {
 
-    public void createValidAccount ()
-           // (String firstName, String lastName, String password, String addressFirstName, String addressLastName,
-            // String addressAddressLine1, String addressAddressLine2, String city, int stateValue, int zip, String country, String mobile)
-    {        Faker faker = new Faker();
-        driver.findElement(txtCustomerFirstName).sendKeys(faker.name().firstName());
-        driver.findElement(txtCustomerLastName).sendKeys(faker.gameOfThrones().house());
-        driver.findElement(txtCreatePassword).sendKeys(faker.internet().password(5, 32));
-        driver.findElement(txtAddressFirstName).sendKeys(faker.cat().breed());
-        driver.findElement(txtAddressLastName).sendKeys(faker.elderScrolls().lastName());
-        driver.findElement(txtAddressLine1).sendKeys(faker.address().fullAddress());
-        WebElement address2 = driver.findElement(txtAddressLine2);
-        if (address2.isDisplayed()) {
-            address2.sendKeys(faker.lordOfTheRings().location());
+        driver.findElement(cbFemale).click();
+        driver.findElement(txtCustomerFirstName).sendKeys(firstName);
+        driver.findElement(txtCustomerLastName).sendKeys(lastName);
+        driver.findElement(txtCreatePassword).sendKeys(password);
+        new Select(driver.findElement(sddBirthDay)).selectByValue(birthDay);
+        new Select(driver.findElement(sddBirthMonth)).selectByValue(birthMonth);
+        new Select(driver.findElement(sddBirthYear)).selectByValue(birthYear);
+        if (subscribe) {
+            driver.findElement(cbNewsletterSignUp).click();
         }
-        driver.findElement(txtAddressCity).sendKeys(faker.gameOfThrones().city());
-        Select state = new Select(driver.findElement(sddAddressState));
-        state.selectByIndex((int) (Math.random()*54));
-        driver.findElement(txtAddressZip).sendKeys(faker.address().zipCode());
-        new Select(driver.findElement(sddAddressCountry)).selectByValue("21");
-        driver.findElement(txtMobilePhone).sendKeys(faker.phoneNumber().cellPhone());
+        if (getOffers) {
+            driver.findElement(cbSpecialOffers).click();
+        }
+        driver.findElement(txtAddressCompanyName).sendKeys(companyName);
+        driver.findElement(txtAddressLine1).sendKeys(address1);
+        WebElement addressLine2 = driver.findElement(txtAddressLine2);
+        if (addressLine2.isDisplayed()) {
+            addressLine2.sendKeys(address2);
+        }
+        driver.findElement(txtAddressCity).sendKeys(city);
+        new Select(driver.findElement(sddAddressCountry)).selectByIndex(country);
+        waitUntilStateSelectable();
+        Select stateOfUsa = new Select(driver.findElement(sddAddressState));
+        stateOfUsa.selectByIndex(state);
+        driver.findElement(txtAddressZip).sendKeys(zip);
+        driver.findElement(txtHomePhone).sendKeys(homePhone);
+        driver.findElement(txtMobilePhone).sendKeys(mobilePhone);
         driver.findElement(btnRegisterButton).click();
+        driver.findElement(txtAddressAlias).sendKeys(alias);
     }
 
+    //TODO something's wrong, account created but status is (false)?
+    @Step("Checking if account has been created successfully")
+    public boolean isAccountCreated() {
+        return driver.findElement(statusLoggedIn).isDisplayed();
+    }
 
+    @Step("Checking errors")
+    public List<WebElement> checkErrors() {
+        List<WebElement> allErrors = driver.findElements(errCreateAccountError);
+        return allErrors;
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
