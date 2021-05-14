@@ -1,7 +1,7 @@
-package Tests;
+package tests;
 
-import Pages.*;
-import Utils.TestListener;
+import pages.*;
+import utils.TestListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
