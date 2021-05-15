@@ -7,6 +7,7 @@ jobs:
   ui-tests:
     docker:
       - image: circleci/openjdk:8u265-jdk-browsers
+      parallelism: 4
     working_directory: ~/repo
     environment:
     # get from git and get maven dependencies
