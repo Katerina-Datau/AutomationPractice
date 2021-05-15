@@ -1,17 +1,10 @@
 package pages;
 
 import io.qameta.allure.Step;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Value;
 import model.Account;
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -173,80 +166,41 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Creating an account")
-    @Data
-    @Builder
-    @Value
-    public void createAccount (){
-        @Default
-        private String gender = cbFemale.click();;
-        @Default
-        private String firstName = txtCustomerFirstName.sendKeys(firstName);
-        @Default
-
-        String lastName = txtCustomerLastName.sendKeys(lastName);
-        @Default
-        String password = txtCreatePassword.sendKeys(password);
-        @Default
-        String birthDay;
-        @Default
-        String birthMonth;
-        @Default
-        String birthYear;
-        @Default
-        boolean subscribe = false;
-        @Default
-        boolean getOffers = false;
-        @Default
-        String companyName;
-        @Default String address1 = txtAddressLine1.sendKeys(address1);
-        @Default
-        String add
-
-
-
-
-    }
-
-
-
-    @Step("Creating an account")
     public void createAccount(Account account) {
-
-
-        //TODO gender - rewrite!!!
-
-
-
+        switch (account.getGender()) {
+            case Mr:
+                cbMale.click();
+                break;
+            case Mrs:
+                cbFemale.click();
+                break;
+        }
+        txtCustomerFirstName.sendKeys(account.getFirstName());
+        txtCustomerLastName.sendKeys(account.getLastName());
+        txtCreatePassword.sendKeys(account.getPassword());
         new Select(sddBirthDay).selectByValue(account.getBirthDay());
-        new Select(sddBirthMonth).selectByValue(birthMonth);
-        new Select(sddBirthYear).selectByValue(birthYear);
-
-
-        if (subscribe) {
+        new Select(sddBirthMonth).selectByValue(account.getBirthMonth());
+        new Select(sddBirthYear).selectByValue(account.getBirthYear());
+        if (account.isSubscribe()) {
             cbNewsletterSignUp.click();
         }
-        if (getOffers) {
+        if (account.isGetOffers()) {
             cbSpecialOffers.click();
         }
-
-
-        txtAddressCompanyName.sendKeys(companyName);
-
-
-
+        txtAddressCompanyName.sendKeys(account.getCompanyName());
+        txtAddressLine1.sendKeys(account.getAddress1());
         if (txtAddressLine2.isDisplayed()) {
-            txtAddressLine2.sendKeys(address2);
+            txtAddressLine2.sendKeys(account.getAddress2());
         }
-        txtAddressCity.sendKeys(city);
-        new Select(sddAddressCountry).selectByIndex(country);
+        txtAddressCity.sendKeys(account.getCity());
+        new Select(sddAddressCountry).selectByValue(account.getCountry());
         waitUntilStateSelectable();
-        Select stateOfUsa = new Select(sddAddressState);
-        stateOfUsa.selectByIndex(state);
-        txtAddressZip.sendKeys(zip);
-        txtHomePhone.sendKeys(homePhone);
-        txtMobilePhone.sendKeys(mobilePhone);
+        new Select(sddAddressState).selectByIndex(account.getState());
+        txtAddressZip.sendKeys(account.getZip());
+        txtHomePhone.sendKeys(account.getHomePhone());
+        txtMobilePhone.sendKeys(account.getMobilePhone());
+        txtAddressAlias.sendKeys(account.getAlias());
         btnRegisterButton.click();
-        txtAddressAlias.sendKeys(alias);
     }
 
     //TODO something's wrong, account created but status is (false)? / test is flaky

@@ -9,10 +9,10 @@ import utils.StringUtils;
 
 @Builder @Value
 public class Account {
-    Faker faker = new Faker();
+    private static Faker faker = new Faker();
 
     @Default
-    private String gender = "ml";
+    private Gender gender = Gender.Other;
 
     @Default
     private String firstName = faker.name().firstName();
@@ -27,7 +27,7 @@ public class Account {
     private String birthDay = "";
 
     @Default
-    private String birthMonth = "",
+    private String birthMonth = "";
 
     @Default
     private String birthYear ="";
