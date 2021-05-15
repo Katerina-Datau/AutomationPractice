@@ -1,6 +1,10 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Value;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,102 +30,101 @@ public class CreateAccountPage extends BasePage {
     @FindBy(id = "email_create")
     WebElement txtCreateByEmail;
 
-    @FindBy(id="SubmitCreate")
+    @FindBy(id = "SubmitCreate")
     WebElement btnCreateAccount;
 
-    @FindBy(id="id_gender1")
+    @FindBy(id = "id_gender1")
     WebElement cbMale;
 
-    @FindBy(id="id_gender2")
+    @FindBy(id = "id_gender2")
     WebElement cbFemale;
 
-    @FindBy(id="customer_firstname")
+    @FindBy(id = "customer_firstname")
     WebElement txtCustomerFirstName;
 
-    @FindBy(id="customer_lastname")
+    @FindBy(id = "customer_lastname")
     WebElement txtCustomerLastName;
 
-    @FindBy(id="email")
+    @FindBy(id = "email")
     WebElement txtCreateEmail;
 
-    @FindBy(id="passwd")
+    @FindBy(id = "passwd")
     WebElement txtCreatePassword;
 
-    @FindBy(id="days")
+    @FindBy(id = "days")
     WebElement sddBirthDay;
 
-    @FindBy(id="months")
+    @FindBy(id = "months")
     WebElement sddBirthMonth;
 
-    @FindBy(id="years")
+    @FindBy(id = "years")
     WebElement sddBirthYear;
 
-    @FindBy(id="newsletter")
+    @FindBy(id = "newsletter")
     WebElement cbNewsletterSignUp;
 
-    @FindBy(id="optin")
+    @FindBy(id = "optin")
     WebElement cbSpecialOffers;
 
-    @FindBy(id="firstname")
+    @FindBy(id = "firstname")
     WebElement txtAddressFirstName;
 
-    @FindBy(id="lastname")
+    @FindBy(id = "lastname")
     WebElement txtAddressLastName;
 
-    @FindBy(id="company")
+    @FindBy(id = "company")
     WebElement txtAddressCompanyName;
 
-    @FindBy(id="address1")
+    @FindBy(id = "address1")
     WebElement txtAddressLine1;
 
-    @FindBy(id="address2")
+    @FindBy(id = "address2")
     WebElement txtAddressLine2;
 
-    @FindBy(id="city")
+    @FindBy(id = "city")
     WebElement txtAddressCity;
 
-    @FindBy(id="id_state")
+    @FindBy(id = "id_state")
     WebElement sddAddressState;
 
-    @FindBy(css="#id_state option")
+    @FindBy(css = "#id_state option")
     WebElement sddAddressStateOption;
 
-    @FindBy(id="postcode")
+    @FindBy(id = "postcode")
     WebElement txtAddressZip;
 
-    @FindBy(id="id_country")
+    @FindBy(id = "id_country")
     WebElement sddAddressCountry;
 
-    @FindBy(id="other")
+    @FindBy(id = "other")
     WebElement txtAdditionalInfo;
 
-    @FindBy(id="phone")
+    @FindBy(id = "phone")
     WebElement txtHomePhone;
 
-    @FindBy(id="alias")
+    @FindBy(id = "alias")
     WebElement txtAddressAlias;
 
-    @FindBy(id="phone_mobile")
+    @FindBy(id = "phone_mobile")
     WebElement txtMobilePhone;
 
-    @FindBy(id="submitAccount")
+    @FindBy(id = "submitAccount")
     WebElement btnRegisterButton;
 
     /**
      * errors:
      */
-    @FindBy(xpath="//*[@id='create_account_error']/ol/li")
+    @FindBy(xpath = "//*[@id='create_account_error']/ol/li")
     WebElement errCreateEmailError;
 
-    @FindBy(xpath="//*[@id='center_column']/div/ol/li")
+    @FindBy(xpath = "//*[@id='center_column']/div/ol/li")
     List<WebElement> errCreateAccountError;
 
     /**
      * status locators:
      */
-    @FindBy(css="a[title='View my customer account'] span")
+    @FindBy(css = "a[title='View my customer account'] span")
     WebElement statusLoggedIn;
-
 
 
     @Step("Opening account creation page")
@@ -169,28 +172,68 @@ public class CreateAccountPage extends BasePage {
     }
 
     @Step("Creating an account")
-    public void createAccount(String gender, String firstName, String lastName, String password,
-                              String birthDay, String birthMonth, String birthYear,
-                              boolean subscribe, boolean getOffers,
-                              String companyName, String address1, String address2, String city, int country,
-                              int state, String zip, String homePhone, String mobilePhone, String alias) {
+    @Data
+    @Builder
+    @Value
+    public void createAccount (){
+        @Default
+        private String gender = cbFemale.click();;
+        @Default
+        private String firstName = txtCustomerFirstName.sendKeys(firstName);
+        @Default
 
-        cbFemale.click();
+        String lastName = txtCustomerLastName.sendKeys(lastName);
+        @Default
+        String password = txtCreatePassword.sendKeys(password);
+        @Default
+        String birthDay;
+        @Default
+        String birthMonth;
+        @Default
+        String birthYear;
+        @Default
+        boolean subscribe = false;
+        @Default
+        boolean getOffers = false;
+        @Default
+        String companyName;
+        @Default String address1 = txtAddressLine1.sendKeys(address1);
+        @Default
+        String add
+
+
+    }
+
+
+
+    @Step("Creating an account")
+    public void createAccount(
+
+            String companyName, String address1, String address2, String city, int country,
+            int state, String zip, String homePhone, String mobilePhone, String alias) {
+
+
         //TODO gender - rewrite!!!
-        txtCustomerFirstName.sendKeys(firstName);
-        txtCustomerLastName.sendKeys(lastName);
-        txtCreatePassword.sendKeys(password);
+
+
+
         new Select(sddBirthDay).selectByValue(birthDay);
         new Select(sddBirthMonth).selectByValue(birthMonth);
         new Select(sddBirthYear).selectByValue(birthYear);
+
+
         if (subscribe) {
             cbNewsletterSignUp.click();
         }
         if (getOffers) {
             cbSpecialOffers.click();
         }
+
+
         txtAddressCompanyName.sendKeys(companyName);
-        txtAddressLine1.sendKeys(address1);
+
+
+
         if (txtAddressLine2.isDisplayed()) {
             txtAddressLine2.sendKeys(address2);
         }
@@ -206,7 +249,7 @@ public class CreateAccountPage extends BasePage {
         txtAddressAlias.sendKeys(alias);
     }
 
-    //TODO something's wrong, account created but status is (false)?
+    //TODO something's wrong, account created but status is (false)? / test is flaky
     @Step("Checking if account has been created successfully")
     public boolean isAccountCreated() {
         return statusLoggedIn.isDisplayed();

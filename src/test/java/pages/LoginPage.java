@@ -17,6 +17,7 @@ public class LoginPage extends BasePage {
     private static final By txtPassword = By.id("passwd");
     private static final By btnLogin = By.id("SubmitLogin");
     private static final By btnForgotPassword = By.className("lost_password");
+    private static final By btnRetrievePassword = By.xpath("//*[@id=\"form_forgotpassword\"]/fieldset/p/button");
 
     private static final By btnLogOut = By.className("logout");
     private static final By btnLogIn = By.className("login");
@@ -25,6 +26,7 @@ public class LoginPage extends BasePage {
      * status locators:
      */
     private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
+    private static final By statusPasswordRetrieved = By.cssSelector(".alert-success");
 
     /**
      * errors:
@@ -63,4 +65,25 @@ public class LoginPage extends BasePage {
         List<WebElement> allErrors = driver.findElements(errLoginError);
         return allErrors;
     }
+
+    @Step("Trying to retrieve forgotten password for '{emailAddress}'")
+    public void passwordRetrieval(String email) {
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+driver.findElement(btnForgotPassword).click();
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.findElement(txtEmail).sendKeys(email);
+        driver.findElement(btnForgotPassword).click();
+    }
+
+
+    @Step("Checking if password retrieval has been successful")
+    public boolean ifRetrieved() {
+        try {
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            return driver.findElement(statusPasswordRetrieved).isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
 }

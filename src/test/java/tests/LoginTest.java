@@ -68,5 +68,13 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "An email address required."));
     }
 
+    //TODO check everything after CA has been sorted out
+    @Test(description = "Password retrieval with correct credentials")
+    public void retrievePasswordCorrect() {
+        loginPage.openPage();
+        loginPage.passwordRetrieval("oberyn.martell@dorne.wst");
+        Assert.assertTrue(loginPage.ifRetrieved());
+    }
+
     //TODO password retrieval 1-4
 }

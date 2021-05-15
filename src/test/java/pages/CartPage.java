@@ -11,8 +11,6 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//TODO WebDriverManager.chromedriver().setup удалить из ресурсов хромдрайвер
-
 public class CartPage extends BasePage {
 
     private static final String urlCartPage = "http://automationpractice.com/index.php?controller=order";
