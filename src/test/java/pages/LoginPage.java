@@ -86,4 +86,13 @@ driver.findElement(btnForgotPassword).click();
         }
     }
 
+    //error retrieval for login and pr basically the same, it seems. Optimize into one method?
+
+    @Step   ("Checking which password retrieval error is displayed")
+    public List<WebElement> retrievalError() {
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        List<WebElement> allErrors = driver.findElements(errLoginError);
+        return allErrors;
+    }
+
 }

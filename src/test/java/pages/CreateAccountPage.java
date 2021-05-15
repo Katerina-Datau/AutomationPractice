@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
+import model.Account;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -202,22 +203,21 @@ public class CreateAccountPage extends BasePage {
         String add
 
 
+
+
     }
 
 
 
     @Step("Creating an account")
-    public void createAccount(
-
-            String companyName, String address1, String address2, String city, int country,
-            int state, String zip, String homePhone, String mobilePhone, String alias) {
+    public void createAccount(Account account) {
 
 
         //TODO gender - rewrite!!!
 
 
 
-        new Select(sddBirthDay).selectByValue(birthDay);
+        new Select(sddBirthDay).selectByValue(account.getBirthDay());
         new Select(sddBirthMonth).selectByValue(birthMonth);
         new Select(sddBirthYear).selectByValue(birthYear);
 

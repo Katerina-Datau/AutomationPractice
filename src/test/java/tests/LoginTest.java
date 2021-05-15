@@ -68,6 +68,9 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "An email address required."));
     }
 
+    /**
+     * 2. Password retrieval tests
+     */
     //TODO check everything after CA has been sorted out
     @Test(description = "Password retrieval with correct credentials")
     public void retrievePasswordCorrect() {
@@ -76,5 +79,13 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.ifRetrieved());
     }
 
-    //TODO password retrieval 1-4
+    @Test(description = "Password retrieval with (null) credentials")
+    public void nullRetrieval() {
+        loginPage.openPage();
+        loginPage.passwordRetrieval("");
+        Assert.assertFalse(loginPage.ifRetrieved());
+        List<WebElement> actualErrorList = loginPage.retrievalError();
+        Assert.assertEquals(actualErrorList.size(), 1);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."));
+    }
 }
