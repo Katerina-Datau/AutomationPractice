@@ -23,7 +23,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("oberyn.martell@dorne.wst", "wrongpass");
         Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.loginError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Authentication failed."));
     }
@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("quentyn@dorne.wst", "12345");
         Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.loginError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Authentication failed."));
     }
@@ -43,7 +43,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("oberyn.martell@@dorne.wst", "unbent111");
         Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.loginError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."));
     }
@@ -53,7 +53,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("oberyn.martell@dorne.wst", "");
         Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.loginError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Password is required."));
     }
@@ -63,7 +63,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.login("", "");
         Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.loginError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "An email address required."));
     }
@@ -84,7 +84,7 @@ public class LoginTest extends BaseTest {
         loginPage.openPage();
         loginPage.passwordRetrieval("");
         Assert.assertFalse(loginPage.ifRetrieved());
-        List<WebElement> actualErrorList = loginPage.retrievalError();
+        List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."));
     }

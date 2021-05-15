@@ -13,14 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ShopWomenPage extends BasePage {
 
-    //Для элемента Blouse:
     public static final By btnAddToWishlist = By.className("addToWishlist");
     private static final String urlShopPageWomen = "http://automationpractice.com/index.php?id_category=3&controller=category";
     private static final By btnShopWomen = By.cssSelector("li a[title='Women']");
     private static final By btnContinueShopping = By.xpath("//*[@title='Continue shopping']");
     private static final By btnProceedToCheckout = By.xpath("//*[@title='Proceed to checkout']");
     private static final By btnOpenCart = By.className("cart_block");
-    String productName;
 
     public ShopWomenPage(WebDriver driver) {
         super(driver);
@@ -38,7 +36,7 @@ public class ShopWomenPage extends BasePage {
 
     public void waitUntilCanBuy() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(btnContinueShopping));
+        wait.until(ExpectedConditions.elementToBeClickable(btnContinueShopping));
     }
 
     @Step("Looking for a {productName} in Shop and adding it to the shopping cart")

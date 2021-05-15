@@ -43,9 +43,6 @@ public class SearchBarTest extends BaseTest {
         Assert.assertTrue(actualResultList.contains("http://automationpractice.com/img/p/1/1-home_default.jpg"));
     }
 
-    //TODO check these for assertfalse?
-    // "dress" returns everything (as opposed to 5 dresses) because it finds "statements dresses" in "more info" product table. Is that right?
-
     @Test(description = "Search for printed summer dresses, both with 'summer' in name and those in 'Summer Dresses' catalog")
     public void searchForPrintedSummer() {
         homePage.openPage();
@@ -122,8 +119,6 @@ public class SearchBarTest extends BaseTest {
         List<String> actualResultList = homePage.findItem();
         Assert.assertTrue(actualResultList.contains("http://automationpractice.com/img/p/7/7-home_default.jpg"));
     }
-
-    //"summ" - t-shirt not in ac anymore, why?
 
     //TODO sorting results
     //TODO checkbox/slider search (doesn't work manually)

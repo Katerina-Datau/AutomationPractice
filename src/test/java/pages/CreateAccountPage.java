@@ -60,12 +60,6 @@ public class CreateAccountPage extends BasePage {
     @FindBy(id = "optin")
     WebElement cbSpecialOffers;
 
-    @FindBy(id = "firstname")
-    WebElement txtAddressFirstName;
-
-    @FindBy(id = "lastname")
-    WebElement txtAddressLastName;
-
     @FindBy(id = "company")
     WebElement txtAddressCompanyName;
 
@@ -128,7 +122,6 @@ public class CreateAccountPage extends BasePage {
     }
 
     //TODO StringUtils, tryEmail туда
-    //TODO генерить фейкеры в test (создать параметры в методах)
 
     @Step("Putting a valid email '{emailAddress}' into email field")
     public boolean tryValidEmail(String emailAddress) {
@@ -147,11 +140,6 @@ public class CreateAccountPage extends BasePage {
         txtCreateByEmail.sendKeys(emailAddress);
         btnCreateAccount.click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    public void waitUntilCanSubmit() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(btnRegisterButton));
     }
 
     public void waitUntilStateSelectable() {
@@ -194,22 +182,29 @@ public class CreateAccountPage extends BasePage {
         }
         txtAddressCity.sendKeys(account.getCity());
         new Select(sddAddressCountry).selectByValue(account.getCountry());
-        waitUntilStateSelectable();
-        new Select(sddAddressState).selectByIndex(account.getState());
-        txtAddressZip.sendKeys(account.getZip());
+        if (!account.getCountry().equals("")) {
+            waitUntilStateSelectable();
+            new Select(sddAddressState).selectByIndex(account.getState());
+            txtAddressZip.sendKeys(account.getZip());
+        }
         txtHomePhone.sendKeys(account.getHomePhone());
         txtMobilePhone.sendKeys(account.getMobilePhone());
         txtAddressAlias.sendKeys(account.getAlias());
         btnRegisterButton.click();
     }
 
-    //TODO something's wrong, account created but status is (false)? / test is flaky
+    public void clearAll() {
+        btnRegisterButton.isDisplayed();
+        txtCreateEmail.clear();
+        new Select(sddAddressCountry).selectByIndex(0);
+        txtAddressAlias.clear();
+    }
+
     @Step("Checking if account has been created successfully")
     public boolean isAccountCreated() {
         return statusLoggedIn.isDisplayed();
     }
 
-    //не факт,что так найдет; был List<WebElement> allErrors = driver.findElements(errCreateAccountError);
     //TODO also maybe optimize
     @Step("Checking errors")
     public List<WebElement> checkErrors() {

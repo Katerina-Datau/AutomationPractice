@@ -12,7 +12,6 @@ public class ShippingConfirmationPage extends BasePage {
     private static final String urlShippingConfirmation = "http://automationpractice.com/index.php?controller=order";
     private static final By chTermsOfServiceConfirmation = By.id("cgv");
     private static final By btnConfirmCarrier = By.cssSelector("button[name='processCarrier']");
-    //   name("processCarrier");
 
     @Step("Agreeing to Terms and conditions of service")
     public void agreeToTos() {

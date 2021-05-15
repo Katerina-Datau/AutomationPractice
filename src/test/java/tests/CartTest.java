@@ -17,7 +17,6 @@ public class CartTest extends BaseTest {
         shopWomenPage.waitUntilCanBuy();
         shopWomenPage.proceedToCheckout();
         cartPage.waitUntilCanProceed();
-        //cartPage.validateNumberOfItemsInCart(2);
         cartPage.validateItemsInCart("Blouse", "$27.00");
         cartPage.validateItemsInCart("Printed Chiffon Dress", "$16.40");
         cartPage.validateOrderDetails(2, "45.40");

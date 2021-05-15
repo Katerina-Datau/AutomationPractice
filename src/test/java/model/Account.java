@@ -7,64 +7,65 @@ import lombok.Value;
 import utils.StringUtils;
 
 
-@Builder @Value
+@Builder
+@Value
 public class Account {
     private static Faker faker = new Faker();
 
     @Default
-    private Gender gender = Gender.Other;
+    Gender gender = Gender.Other;
 
     @Default
-    private String firstName = faker.name().firstName();
+    String firstName = faker.name().firstName();
 
     @Default
-    private String lastName = faker.gameOfThrones().house();
+    String lastName = faker.gameOfThrones().house();
 
     @Default
-    private String password = faker.internet().password(5, 32);
+    String password = faker.internet().password(5, 32);
 
     @Default
-    private String birthDay = "";
+    String birthDay = "";
 
     @Default
-    private String birthMonth = "";
+    String birthMonth = "";
 
     @Default
-    private String birthYear ="";
+    String birthYear = "";
 
     @Default
-    private boolean subscribe = false;
+    boolean subscribe = false;
 
     @Default
-    private boolean getOffers = false;
+    boolean getOffers = false;
 
     @Default
-    private String companyName = "";
+    String companyName = "";
 
     @Default
-    private String address1 = faker.space().agency();
+    String address1 = faker.space().agency();
 
     @Default
-    private String address2 = "";
+    String address2 = "";
 
     @Default
-    private String city = faker.gameOfThrones().city();
+    String city = faker.gameOfThrones().city();
 
     @Default
-    private String country = "21";
+    String country = "21";
 
     @Default
-    private int state = (int) (Math.random() * 53 + 1);
+    int state = (int) (Math.random() * 53 + 1);
 
     @Default
-    private String zip = StringUtils.createString("#####");
+    String zip = StringUtils.createString("#####");
 
     @Default
-    private String homePhone = "";
+    String homePhone = "";
 
     @Default
-    private String mobilePhone = faker.phoneNumber().cellPhone();
+    String mobilePhone = faker.phoneNumber().cellPhone();
 
     @Default
-    private String alias = "";
+    String alias = "";
 }

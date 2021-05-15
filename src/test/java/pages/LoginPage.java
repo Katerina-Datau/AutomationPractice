@@ -16,7 +16,7 @@ public class LoginPage extends BasePage {
     private static final By txtEmail = By.id("email");
     private static final By txtPassword = By.id("passwd");
     private static final By btnLogin = By.id("SubmitLogin");
-    private static final By btnForgotPassword = By.className("lost_password");
+    private static final By btnForgotPassword = By.cssSelector(".lost_password a");
     private static final By btnRetrievePassword = By.xpath("//*[@id=\"form_forgotpassword\"]/fieldset/p/button");
 
     private static final By btnLogOut = By.className("logout");
@@ -59,22 +59,20 @@ public class LoginPage extends BasePage {
         }
     }
 
-    @Step("Checking which login error is displayed")
-    public List<WebElement> loginError() {
+    @Step("Checking which login page error is displayed")
+    public List<WebElement> checkError() {
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        List<WebElement> allErrors = driver.findElements(errLoginError);
-        return allErrors;
+        return driver.findElements(errLoginError);
     }
 
     @Step("Trying to retrieve forgotten password for '{emailAddress}'")
     public void passwordRetrieval(String email) {
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-driver.findElement(btnForgotPassword).click();
+        driver.findElement(btnForgotPassword).click();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.findElement(txtEmail).sendKeys(email);
-        driver.findElement(btnForgotPassword).click();
+        driver.findElement(btnRetrievePassword).click();
     }
-
 
     @Step("Checking if password retrieval has been successful")
     public boolean ifRetrieved() {
@@ -85,14 +83,4 @@ driver.findElement(btnForgotPassword).click();
             return false;
         }
     }
-
-    //error retrieval for login and pr basically the same, it seems. Optimize into one method?
-
-    @Step   ("Checking which password retrieval error is displayed")
-    public List<WebElement> retrievalError() {
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-        List<WebElement> allErrors = driver.findElements(errLoginError);
-        return allErrors;
-    }
-
 }

@@ -21,7 +21,6 @@ public class HomePage extends BasePage {
     private static final By txtSearchBar = By.id("search_query_top");
     private static final By btnSearchButton = By.name("submit_search");
     private static final By btnResultsInList = By.cssSelector(".icon-th-list");
-    //TODO переписать локатор на море бтн!
     private static final By btnMore = By.cssSelector(".lnk_view");
     private static final By txtSearchResultsCount = By.className("heading-counter");
     private static final By txtErrorAlert = By.className("alert-warning");
@@ -49,7 +48,6 @@ public class HomePage extends BasePage {
         driver.findElement(btnResultsInList).click();
     }
 
-    //TODO переписать на стабильный
     @Step("Pressing 'More' button")
     public void pressMore() {
         driver.findElement(btnMore).click();
@@ -82,7 +80,6 @@ public class HomePage extends BasePage {
         }
         return urlList;
     }
-
 
     public void ifACIsVisible() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
