@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class BasePage {
+public abstract class BasePage {
     WebDriver driver;
 
     public BasePage(WebDriver driver) {
