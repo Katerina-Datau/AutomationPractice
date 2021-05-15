@@ -155,6 +155,7 @@ public class CreateAccountPage extends BasePage {
 
     @Step("Creating an account")
     public void createAccount(Account account) {
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         switch (account.getGender()) {
             case Mr:
                 cbMale.click();
