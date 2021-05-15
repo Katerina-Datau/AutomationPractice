@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Issue;
 import model.Account;
 import model.Gender;
 import org.openqa.selenium.WebElement;
@@ -14,7 +15,7 @@ public class CreateAccountTest extends BaseTest {
     /**
      * 1. Email validation page
      */
-    @Test(description = "Input valid email address")
+    @Test(description = "Input valid email address", invocationCount = 3, threadPoolSize = 3)
     public void validEmail() {
         createAccountPage.openPage();
         Assert.assertTrue(createAccountPage.tryValidEmail(StringUtils.createValidEmail()));
@@ -292,6 +293,7 @@ public class CreateAccountTest extends BaseTest {
     }
 
     @Test(description = "Input non-required home phone number while leaving explicitly required cellphone number (null)", expectedExceptions = {AssertionError.class})
+    @Issue("Assertion Error")
     public void isCellRequired() {
         Account account = Account.builder()
                 .mobilePhone("")
