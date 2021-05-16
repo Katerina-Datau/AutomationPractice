@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E2E Test" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="utils.AnnotationTransformer"/>
+    </listeners>
+    <test name="test 1">
+        <classes>
+            <class name="tests.CreateAccountTest"/>
+            <class name="tests.SearchBarTest"/>
+
+        </classes>
+    </test> <!-- Test -->
+    <test name="test 2">
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.ShopTest"/>
+            <class name="tests.CartTest"/>
+        </classes>
+    </test> <!-- Test -->
+</suite>

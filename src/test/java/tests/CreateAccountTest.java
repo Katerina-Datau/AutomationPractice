@@ -15,7 +15,7 @@ public class CreateAccountTest extends BaseTest {
     /**
      * 1. Email validation page
      */
-    @Test(description = "Input valid email address", invocationCount = 3, threadPoolSize = 3)
+    @Test(description = "Input valid email address")
     public void validEmail() {
         createAccountPage.openPage();
         Assert.assertTrue(createAccountPage.tryValidEmail(StringUtils.createValidEmail()));
