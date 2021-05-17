@@ -18,7 +18,7 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.ifLoggedIn());
     }
 
-    @DataProvider(name = "Input incorrect login credentials")
+    @DataProvider(name = "Input incorrect data")
     public Object[][] accountInput() {
         return new Object[][]{
                 {"oberyn.martell@dorne.wst", "wrongpass", 1, "Authentication failed."},
@@ -29,21 +29,21 @@ public class LoginTest extends BaseTest {
         };
     }
 
-    @Test(description = "Login attempt with incorrect credentials", dataProvider = "Input incorrect login credentials")
-    public void accountTest(String email, String password, int errors, String errorMessage) {
+    @Test(description = "Login attempt with incorrect credentials", dataProvider = "Input incorrect data")
+    public void accountTest(String email, String password, String errors, String errorMessage) {
         loginPage.openPage();
         loginPage.login(email, password);
         Assert.assertFalse(loginPage.ifLoggedIn());
         List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), errors);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage));
+        Assert.assertEquals(actualErrorList.size(), errors, "Error number doesn't match");
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage), "Error not found");
     }
 
     @Test(description = "Password retrieval with correct credentials")
     public void retrievePasswordCorrect() {
         loginPage.openPage();
         loginPage.passwordRetrieval("oberyn.martell@dorne.wst");
-        Assert.assertTrue(loginPage.ifRetrieved());
+        Assert.assertTrue(loginPage.ifRetrieved(), "Failed to retrieve password");
     }
 
     @Test(description = "Password retrieval with (null) credentials")
@@ -52,7 +52,7 @@ public class LoginTest extends BaseTest {
         loginPage.passwordRetrieval("");
         Assert.assertFalse(loginPage.ifRetrieved());
         List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."));
+        Assert.assertEquals(actualErrorList.size(), 1, "Error number doesn't match");
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."), "Error not found");
     }
 }
