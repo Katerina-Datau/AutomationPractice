@@ -188,6 +188,7 @@ public class CreateAccountPage extends BasePage {
             new Select(sddAddressState).selectByIndex(account.getState());
             txtAddressZip.sendKeys(account.getZip());
         }
+        txtAdditionalInfo.sendKeys(account.getOther());
         txtHomePhone.sendKeys(account.getHomePhone());
         txtMobilePhone.sendKeys(account.getMobilePhone());
         txtAddressAlias.sendKeys(account.getAlias());

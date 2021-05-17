@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class HomePage extends BasePage {
 
@@ -31,6 +32,7 @@ public class HomePage extends BasePage {
     @Step("Opening homepage")
     public void openPage() {
         driver.get(urlHomePage);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 
     @Step("Typing in search bar: '{query}'")
@@ -81,9 +83,9 @@ public class HomePage extends BasePage {
         return urlList;
     }
 
-    public void ifACIsVisible() {
+    public void waitUntilACVisible() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(ddAutoCompleteResults));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(ddAutoCompleteResults));
     }
 
     @Step("Checking if autocomplete bar is visible")

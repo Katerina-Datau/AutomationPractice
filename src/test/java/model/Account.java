@@ -61,6 +61,9 @@ public class Account {
     String zip = StringUtils.createString("#####");
 
     @Default
+    String other = "";
+
+    @Default
     String homePhone = "";
 
     @Default

@@ -1,7 +1,5 @@
 package tests;
 
-import pages.*;
-import utils.TestListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,7 +7,9 @@ import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import pages.*;
 import utils.StringUtils;
+import utils.TestListener;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +20,7 @@ public class BaseTest {
     WebDriver driver;
     HomePage homePage;
     LoginPage loginPage;
-    ShopWomenPage shopWomenPage;
+    ShopPage shopPage;
     CartPage cartPage;
     CreateAccountPage createAccountPage;
     MyAccountPage myAccountPage;
@@ -40,7 +40,7 @@ public class BaseTest {
         homePage = new HomePage(driver);
         createAccountPage = new CreateAccountPage(driver);
         loginPage = new LoginPage(driver);
-        shopWomenPage = new ShopWomenPage(driver);
+        shopPage = new ShopPage(driver);
         cartPage = new CartPage(driver);
         myAccountPage = new MyAccountPage(driver);
         addressesCheckoutPage = new AddressesCheckoutPage(driver);

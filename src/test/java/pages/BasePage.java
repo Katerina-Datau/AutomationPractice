@@ -21,10 +21,10 @@ public abstract class BasePage {
         return false;
     }
 
-    /**
-     * credentials:
-     * email oberyn.martell@dorne.wst
-     * password unbent111
-     */
+/*
+     credentials:
+     email oberyn.martell@dorne.wst
+     password unbent111
+ */
 }
 

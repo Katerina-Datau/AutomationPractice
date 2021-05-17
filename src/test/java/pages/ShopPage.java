@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
-public class ShopWomenPage extends BasePage {
+public class ShopPage extends BasePage {
 
     public static final By btnAddToWishlist = By.className("addToWishlist");
     private static final String urlShopPageWomen = "http://automationpractice.com/index.php?id_category=3&controller=category";
@@ -20,7 +20,7 @@ public class ShopWomenPage extends BasePage {
     private static final By btnProceedToCheckout = By.xpath("//*[@title='Proceed to checkout']");
     private static final By btnOpenCart = By.className("cart_block");
 
-    public ShopWomenPage(WebDriver driver) {
+    public ShopPage(WebDriver driver) {
         super(driver);
     }
 

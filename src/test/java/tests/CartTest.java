@@ -9,13 +9,13 @@ public class CartTest extends BaseTest {
     public void cartCheckItems() {
         loginPage.openPage();
         loginPage.login("oberyn.martell@dorne.wst", "unbent111");
-        shopWomenPage.goToShop();
-        shopWomenPage.addToCart("Blouse");
-        shopWomenPage.waitUntilCanBuy();
-        shopWomenPage.continueShopping();
-        shopWomenPage.addToCart("Printed Chiffon Dress");
-        shopWomenPage.waitUntilCanBuy();
-        shopWomenPage.proceedToCheckout();
+        shopPage.goToShop();
+        shopPage.addToCart("Blouse");
+        shopPage.waitUntilCanBuy();
+        shopPage.continueShopping();
+        shopPage.addToCart("Printed Chiffon Dress");
+        shopPage.waitUntilCanBuy();
+        shopPage.proceedToCheckout();
         cartPage.waitUntilCanProceed();
         cartPage.validateItemsInCart("Blouse", "$27.00");
         cartPage.validateItemsInCart("Printed Chiffon Dress", "$16.40");

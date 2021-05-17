@@ -10,10 +10,10 @@ public class ShopTest extends BaseTest {
     public void buyOneItem() {
         loginPage.openPage();
         loginPage.login("oberyn.martell@dorne.wst", "unbent111");
-        shopWomenPage.goToShop();
-        shopWomenPage.addToCart("Blouse");
-        shopWomenPage.waitUntilCanBuy();
-        shopWomenPage.proceedToCheckout();
+        shopPage.goToShop();
+        shopPage.addToCart("Blouse");
+        shopPage.waitUntilCanBuy();
+        shopPage.proceedToCheckout();
         cartPage.proceedToCheckout();
         addressesCheckoutPage.proceedToCheckout();
         shippingConfirmationPage.agreeToTos();

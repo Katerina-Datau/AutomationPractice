@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 public class SearchBarTest extends BaseTest {
 
     @Test(description = "Press the search button without actually putting in search phrase")
+    @TmsLink("AP-17")
     public void searchForNull() {
         homePage.openPage();
         homePage.searchForText("");
@@ -18,6 +20,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Search for all items in the shop")
+    @TmsLink("AP-18")
     public void searchForAll() {
         homePage.openPage();
         homePage.searchForText("all");
@@ -34,6 +37,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Search for a specific item in the shop (Faded Short Sleeve T-shirts)")
+    @TmsLink("AP-19")
     public void searchForItem() {
         homePage.openPage();
         homePage.searchForText("Faded Short Sleeve T-shirts");
@@ -43,7 +47,8 @@ public class SearchBarTest extends BaseTest {
         Assert.assertTrue(actualResultList.contains("http://automationpractice.com/img/p/1/1-home_default.jpg"));
     }
 
-    @Test(description = "Search for printed summer dresses, both with 'summer' in name and those in 'Summer Dresses' catalog")
+    @Test(description = "Search for printed summer dresses")
+    @TmsLink("AP-20")
     public void searchForPrintedSummer() {
         homePage.openPage();
         homePage.searchForText("printed summer");
@@ -60,6 +65,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Search for items with yellow as an available colour option")
+    @TmsLink("AP-24")
     public void searchForYellow() {
         homePage.openPage();
         homePage.searchForText("yellow");
@@ -75,6 +81,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Search for term which must produce no results on the website")
+    @TmsLink("AP-25")
     public void searchForIncorrect() {
         homePage.openPage();
         homePage.searchForText("nuclear");
@@ -84,10 +91,11 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Check if autocompletion function is implemented properly")
+    @TmsLink("AP-26")
     public void autoCompleteTest() {
         homePage.openPage();
         homePage.searchForText("sum");
-        homePage.ifACIsVisible();
+        homePage.waitUntilACVisible();
         Assert.assertTrue(homePage.acVisible());
         List<String> actualResultList = homePage.findACResult();
         Assert.assertTrue(actualResultList.contains("Summer Dresses > Printed Summer Dress"));
@@ -96,6 +104,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Check if user can begin search by pressing ENTER on the keyboard")
+    @TmsLink("AP-15")
     public void enterKeyTest() {
         homePage.openPage();
         homePage.searchForText("blouse");
@@ -106,6 +115,7 @@ public class SearchBarTest extends BaseTest {
     }
 
     @Test(description = "Check if search results are preserved after looking for more info on the item and returning back to the search result page")
+    @TmsLink("AP-16")
     public void resultPreservationTest() {
         homePage.openPage();
         homePage.searchForText("blouse");
@@ -119,8 +129,5 @@ public class SearchBarTest extends BaseTest {
         List<String> actualResultList = homePage.findItem();
         Assert.assertTrue(actualResultList.contains("http://automationpractice.com/img/p/7/7-home_default.jpg"));
     }
-
-    //TODO sorting results
-    //TODO checkbox/slider search (doesn't work manually)
 
 }
