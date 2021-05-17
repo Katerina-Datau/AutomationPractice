@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.annotations.ITestAnnotation;
-import utils.RetryAnalyzer;
 
 public class AnnotationTransformer implements IAnnotationTransformer {
 

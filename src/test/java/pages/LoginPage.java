@@ -52,7 +52,7 @@ public class LoginPage extends BasePage {
     @Step("Checking if login attempt has been successful")
     public boolean ifLoggedIn() {
         try {
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
             return driver.findElement(statusLoggedIn).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;

@@ -76,7 +76,7 @@ public class HomePage extends BasePage {
     @Step("Comparing actual search results with expected search results")
     public List<String> findItem() {
         List<WebElement> searchResult = driver.findElements(searchResultList);
-        List<String> urlList = new ArrayList<String>();
+        List<String> urlList = new ArrayList<>();
         for (WebElement e : searchResult) {
             urlList.add(e.getAttribute("src"));
         }
@@ -84,7 +84,7 @@ public class HomePage extends BasePage {
     }
 
     public void waitUntilACVisible() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOfElementLocated(ddAutoCompleteResults));
     }
 
@@ -96,7 +96,7 @@ public class HomePage extends BasePage {
     @Step("Comparing actual autocomplete suggestions with expected suggestions")
     public List<String> findACResult() {
         List<WebElement> acResult = driver.findElements(autoCompleteResultList);
-        List<String> urlList = new ArrayList<String>();
+        List<String> urlList = new ArrayList<>();
         for (WebElement e : acResult) {
             urlList.add(e.getText());
         }

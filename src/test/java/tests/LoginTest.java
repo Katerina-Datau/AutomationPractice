@@ -9,8 +9,6 @@ import java.util.List;
 
 public class LoginTest extends BaseTest {
 
-    //TODO find a way to merge correct and incorrect login into one method OR roll back to prevoius tests
-
     @Test(description = "Log in with correct credentials")
     public void correctLogin() {
         loginPage.openPage();

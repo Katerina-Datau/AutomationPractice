@@ -121,8 +121,6 @@ public class CreateAccountPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    //TODO StringUtils, tryEmail туда
-
     @Step("Putting a valid email '{emailAddress}' into email field")
     public boolean tryValidEmail(String emailAddress) {
         submitEmail(emailAddress);
@@ -207,12 +205,10 @@ public class CreateAccountPage extends BasePage {
         return statusLoggedIn.isDisplayed();
     }
 
-    //TODO also maybe optimize
     @Step("Checking errors")
     public List<WebElement> checkErrors() {
         return errCreateAccountError;
     }
-
 }
 
 
