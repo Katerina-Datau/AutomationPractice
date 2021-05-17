@@ -2,15 +2,15 @@ package tests;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class LoginTest extends BaseTest {
 
-    /**
-     * 1 Log in test
-     */
+    //TODO find a way to merge correct and incorrect login into one method OR roll back to prevoius tests
+
     @Test(description = "Log in with correct credentials")
     public void correctLogin() {
         loginPage.openPage();
@@ -18,60 +18,27 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.ifLoggedIn());
     }
 
-    @Test(description = "Try logging in with correct email and incorrect password")
-    public void wrongPassword() {
-        loginPage.openPage();
-        loginPage.login("oberyn.martell@dorne.wst", "wrongpass");
-        Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Authentication failed."));
+    @DataProvider(name = "Input incorrect login credentials")
+    public Object[][] accountInput() {
+        return new Object[][]{
+                {"oberyn.martell@dorne.wst", "wrongpass", 1, "Authentication failed."},
+                {"quentyn@dorne.wst", "12345", 1, "Authentication failed."},
+                {"oberyn.martell@@dorne.wst", "unbent111", 1, "Invalid email address."},
+                {"oberyn.martell@dorne.wst", "", 1, "Password is required."},
+                {"", "", 1, "An email address required."}
+        };
     }
 
-    @Test(description = "Try logging in with a valid, but non-registered email")
-    public void notRegistered() {
+    @Test(description = "Login attempt with incorrect credentials", dataProvider = "Input incorrect login credentials")
+    public void accountTest(String email, String password, int errors, String errorMessage) {
         loginPage.openPage();
-        loginPage.login("quentyn@dorne.wst", "12345");
+        loginPage.login(email, password);
         Assert.assertFalse(loginPage.ifLoggedIn());
         List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Authentication failed."));
+        Assert.assertEquals(actualErrorList.size(), errors);
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage));
     }
 
-    @Test(description = "Try logging in with an invalid email")
-    public void loginInvalidEmail() {
-        loginPage.openPage();
-        loginPage.login("oberyn.martell@@dorne.wst", "unbent111");
-        Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."));
-    }
-
-    @Test(description = "Try logging in with a correct email and (null) password")
-    public void nullLogin() {
-        loginPage.openPage();
-        loginPage.login("oberyn.martell@dorne.wst", "");
-        Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Password is required."));
-    }
-
-    @Test(description = "Try logging in with (null) credentials")
-    public void nullPassword() {
-        loginPage.openPage();
-        loginPage.login("", "");
-        Assert.assertFalse(loginPage.ifLoggedIn());
-        List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1);
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "An email address required."));
-    }
-
-    /**
-     * 2. Password retrieval tests
-     */
-    //TODO check everything after CA has been sorted out
     @Test(description = "Password retrieval with correct credentials")
     public void retrievePasswordCorrect() {
         loginPage.openPage();
