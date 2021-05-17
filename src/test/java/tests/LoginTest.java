@@ -30,7 +30,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "Login attempt with incorrect credentials", dataProvider = "Input incorrect data")
-    public void accountTest(String email, String password, String errors, String errorMessage) {
+    public void accountTest(String email, String password, int errors, String errorMessage) {
         loginPage.openPage();
         loginPage.login(email, password);
         Assert.assertFalse(loginPage.ifLoggedIn());
