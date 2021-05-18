@@ -13,7 +13,7 @@ public class Account {
     private static Faker faker = new Faker();
 
     @Default
-    Gender gender = Gender.Other;
+    Gender gender = Gender.OTHER;
 
     @Default
     String firstName = faker.name().firstName();
@@ -58,7 +58,7 @@ public class Account {
     int state = (int) (Math.random() * 53 + 1);
 
     @Default
-    String zip = StringUtils.createString("#####");
+    String zip = StringUtils.createBothifiedString("#####");
 
     @Default
     String other = "";

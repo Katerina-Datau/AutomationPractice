@@ -15,43 +15,38 @@ public class StringUtils extends Faker {
      * @return
      */
 
-    public static String createString(String generatedString) {
+    public static String createBothifiedString(String generatedString) {
         FakeValuesService fakeValuesService = new FakeValuesService(
                 new Locale("en-GB"), new RandomService());
         return fakeValuesService.bothify(generatedString);
     }
 
     public static String createValidEmail() {
-        return createString("????##@##gmail.com");
+        return createBothifiedString("????##@##gmail.com");
     }
 
     public static String createInvalidEmailDoubleToad() {
-        return createString("????##@@##gmail.com");
+        return createBothifiedString("????##@@##gmail.com");
     }
 
     public static String createInvalidEmailEndsWithDot() {
-        return createString("?????##@##gmail.com.");
+        return createBothifiedString("?????##@##gmail.com.");
     }
 
     public static String createInvalidEmailStartsWithDot() {
-        return createString(".????##@##gmail.com");
+        return createBothifiedString(".????##@##gmail.com");
     }
 
     public static String createInvalidEmailNoSyntax() {
-        return createString("????####?????");
+        return createBothifiedString("????####?????");
     }
 
     public static String createInvalidEmailForbiddenDomainSymbols(char symbol) {
-        return createString("????##@") + symbol + createString("???.???");
+        return createBothifiedString("????##@") + symbol + createBothifiedString("???.???");
     }
 
     public static String emailAlreadyExists() {
         return "oberyn.martell@dorne.wst";
     }
-
-    /**
-     * Account creation defaults:
-     */
-
 
 }

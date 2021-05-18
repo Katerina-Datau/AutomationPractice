@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="E2ETest" verbose="1" parallel="tests" thread-count="2">
     <listeners>
-        <listener class-name="utils.AnnotationTransformer"/>
+        <listener class-name="config.AnnotationTransformer"/>
     </listeners>
     <test name="test 1">
         <classes>

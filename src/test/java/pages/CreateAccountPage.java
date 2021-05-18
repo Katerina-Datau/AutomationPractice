@@ -155,10 +155,10 @@ public class CreateAccountPage extends BasePage {
     public void createAccount(Account account) {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         switch (account.getGender()) {
-            case Mr:
+            case MR:
                 cbMale.click();
                 break;
-            case Mrs:
+            case MRS:
                 cbFemale.click();
                 break;
         }

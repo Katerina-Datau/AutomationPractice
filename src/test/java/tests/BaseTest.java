@@ -8,7 +8,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import pages.*;
-import utils.StringUtils;
 import utils.TestListener;
 
 import java.util.concurrent.TimeUnit;
@@ -27,7 +26,6 @@ public class BaseTest {
     AddressesCheckoutPage addressesCheckoutPage;
     PaymentMethodSelectionPage paymentMethodSelectionPage;
     ShippingConfirmationPage shippingConfirmationPage;
-    StringUtils stringUtils;
 
     @BeforeMethod(description = "Open browser and maximize the window")
     public void setUp(ITestContext context) {
@@ -46,7 +44,6 @@ public class BaseTest {
         addressesCheckoutPage = new AddressesCheckoutPage(driver);
         paymentMethodSelectionPage = new PaymentMethodSelectionPage(driver);
         shippingConfirmationPage = new ShippingConfirmationPage(driver);
-        stringUtils = new StringUtils();
     }
 
     @AfterMethod(alwaysRun = true, description = "Close browser and delete all cookies")

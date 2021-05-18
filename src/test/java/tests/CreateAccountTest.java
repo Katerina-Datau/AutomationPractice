@@ -81,7 +81,7 @@ public class CreateAccountTest extends BaseTest {
     public void createValidAccountAllFields() {
         createAccountPage.openPage();
         Account account = Account.builder()
-                .gender(Gender.Mrs)
+                .gender(Gender.MRS)
                 .birthDay(String.format("%s", (int) (Math.random() * 28) + 1))
                 .birthMonth(String.format("%s", (int) (Math.random() * 12) + 1))
                 .birthYear(String.format("%s", (int) (Math.random() * 122) + 1900))
@@ -89,7 +89,7 @@ public class CreateAccountTest extends BaseTest {
                 .getOffers(true)
                 .companyName(new StringUtils().space().agency())
                 .address2(new StringUtils().lordOfTheRings().location())
-                .homePhone(StringUtils.createString("+###########"))
+                .homePhone(StringUtils.createBothifiedString("+###########"))
                 .build();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
         createAccountPage.createAccount(account);
@@ -130,8 +130,8 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input numerical data in First name and Last name fields")
     public void numericalNames() {
         Account account = Account.builder()
-                .firstName(StringUtils.createString("#######"))
-                .lastName(StringUtils.createString("#######"))
+                .firstName(StringUtils.createBothifiedString("#######"))
+                .lastName(StringUtils.createBothifiedString("#######"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -159,8 +159,8 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input names over character limit of 32 characters")
     public void namesOverCharacterLimit() {
         Account account = Account.builder()
-                .firstName(StringUtils.createString("???????????????????????????????????"))
-                .lastName(StringUtils.createString("???????????????????????????????????"))
+                .firstName(StringUtils.createBothifiedString("???????????????????????????????????"))
+                .lastName(StringUtils.createBothifiedString("???????????????????????????????????"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -174,7 +174,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input password under character limit of 5 characters")
     public void passwordTooShort() {
         Account account = Account.builder()
-                .password(StringUtils.createString("#?#"))
+                .password(StringUtils.createBothifiedString("#?#"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -217,7 +217,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input city with a name over limit of 64 characters")
     public void cityOverLimit() {
         Account account = Account.builder()
-                .city(StringUtils.createString("##################################################################################################################################################################"))
+                .city(StringUtils.createBothifiedString("##################################################################################################################################################################"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -256,7 +256,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input zip which doesn't follow 00000 format")
     public void wrongZip() {
         Account account = Account.builder()
-                .zip(StringUtils.createString("#####??"))
+                .zip(StringUtils.createBothifiedString("#####??"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -269,7 +269,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input an invalid cellphone number (consists of letters a-z)")
     public void wrongCell() {
         Account account = Account.builder()
-                .mobilePhone(StringUtils.createString("???????????"))
+                .mobilePhone(StringUtils.createBothifiedString("???????????"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -282,7 +282,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input cellphone number over limit of 32 numbers")
     public void cellOverLimit() {
         Account account = Account.builder()
-                .mobilePhone(StringUtils.createString("######################################"))
+                .mobilePhone(StringUtils.createBothifiedString("######################################"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -297,7 +297,7 @@ public class CreateAccountTest extends BaseTest {
     public void isCellRequired() {
         Account account = Account.builder()
                 .mobilePhone("")
-                .homePhone(StringUtils.createString("+###########"))
+                .homePhone(StringUtils.createBothifiedString("+###########"))
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());

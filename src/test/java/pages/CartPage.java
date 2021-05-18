@@ -56,7 +56,7 @@ public class CartPage extends BasePage {
     @Step("Validating name and price of {productName} in cart")
     public void validateItemsInCart(String productName, String price) {
         WebElement element = findItemByName(productName);
-        Assert.assertTrue(element.findElement(txtItemPrice).getText().equals(price));
+        Assert.assertEquals(price, element.findElement(txtItemPrice).getText());
     }
 
     @Step("Validating total price and quantity of items in cart")

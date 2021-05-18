@@ -13,12 +13,9 @@ public abstract class BasePage {
     }
 
     public boolean findText(final List<WebElement> allErrors, String findText) {
-        for (int i = 0; i < allErrors.size(); i++) {
-            if (allErrors.get(i).getText().equals(findText)) {
-                return true;
-            }
-        }
-        return false;
+        return allErrors.stream()
+                .map(WebElement::getText)
+                .anyMatch(text -> text.equals(findText));
     }
 }
 
