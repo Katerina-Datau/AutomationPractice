@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import utils.StringUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class CreateAccountTest extends BaseTest {
 
@@ -22,6 +23,7 @@ public class CreateAccountTest extends BaseTest {
     @TmsLink("AP-37")
     public void validEmail() {
         createAccountPage.openPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertTrue(createAccountPage.tryValidEmail(StringUtils.createValidEmail()),
                 "Email expected to match");
     }
@@ -43,6 +45,7 @@ public class CreateAccountTest extends BaseTest {
     @TmsLink("AP-1")
     public void accountTest(String emailInput, String errorMessage) {
         createAccountPage.openPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Assert.assertEquals(createAccountPage.tryWrongEmail(emailInput),
                 errorMessage, "Message doesn't match");
     }
@@ -94,6 +97,7 @@ public class CreateAccountTest extends BaseTest {
                 .mobilePhone("")
                 .build();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         createAccountPage.clearAll();
         createAccountPage.createAccount(account);
         List<WebElement> actualErrorList = createAccountPage.checkErrors();

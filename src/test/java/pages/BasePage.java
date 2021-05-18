@@ -17,5 +17,7 @@ public abstract class BasePage {
                 .map(WebElement::getText)
                 .anyMatch(text -> text.equals(findText));
     }
+
+    public abstract void openPage();
 }
 

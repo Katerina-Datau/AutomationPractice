@@ -9,7 +9,6 @@ public class ShippingConfirmationPage extends BasePage {
         super(driver);
     }
 
-    private static final String urlShippingConfirmation = "http://automationpractice.com/index.php?controller=order";
     private static final By chTermsOfServiceConfirmation = By.id("cgv");
     private static final By btnConfirmCarrier = By.cssSelector("button[name='processCarrier']");
 
@@ -21,6 +20,10 @@ public class ShippingConfirmationPage extends BasePage {
     @Step("Proceeding to checkout")
     public void proceedToCheckout() {
         driver.findElement(btnConfirmCarrier).click();
+    }
+
+    @Override
+    public void openPage() {
     }
 
 }

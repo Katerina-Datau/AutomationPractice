@@ -22,7 +22,6 @@ public class BaseTest {
     ShopPage shopPage;
     CartPage cartPage;
     CreateAccountPage createAccountPage;
-    MyAccountPage myAccountPage;
     AddressesCheckoutPage addressesCheckoutPage;
     PaymentMethodSelectionPage paymentMethodSelectionPage;
     ShippingConfirmationPage shippingConfirmationPage;
@@ -40,7 +39,6 @@ public class BaseTest {
         loginPage = new LoginPage(driver);
         shopPage = new ShopPage(driver);
         cartPage = new CartPage(driver);
-        myAccountPage = new MyAccountPage(driver);
         addressesCheckoutPage = new AddressesCheckoutPage(driver);
         paymentMethodSelectionPage = new PaymentMethodSelectionPage(driver);
         shippingConfirmationPage = new ShippingConfirmationPage(driver);

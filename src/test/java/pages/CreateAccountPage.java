@@ -2,10 +2,9 @@ package pages;
 
 import io.qameta.allure.Step;
 import model.Account;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,195 +20,140 @@ public class CreateAccountPage extends BasePage {
 
     private static final String urlCreateAccount = "http://automationpractice.com/index.php?controller=authentication&back=my-account#account-creation";
 
-    @FindBy(id = "email_create")
-    WebElement txtCreateByEmail;
-
-    @FindBy(id = "SubmitCreate")
-    WebElement btnCreateAccount;
-
-    @FindBy(id = "id_gender1")
-    WebElement cbMale;
-
-    @FindBy(id = "id_gender2")
-    WebElement cbFemale;
-
-    @FindBy(id = "customer_firstname")
-    WebElement txtCustomerFirstName;
-
-    @FindBy(id = "customer_lastname")
-    WebElement txtCustomerLastName;
-
-    @FindBy(id = "email")
-    WebElement txtCreateEmail;
-
-    @FindBy(id = "passwd")
-    WebElement txtCreatePassword;
-
-    @FindBy(id = "days")
-    WebElement sddBirthDay;
-
-    @FindBy(id = "months")
-    WebElement sddBirthMonth;
-
-    @FindBy(id = "years")
-    WebElement sddBirthYear;
-
-    @FindBy(id = "newsletter")
-    WebElement cbNewsletterSignUp;
-
-    @FindBy(id = "optin")
-    WebElement cbSpecialOffers;
-
-    @FindBy(id = "company")
-    WebElement txtAddressCompanyName;
-
-    @FindBy(id = "address1")
-    WebElement txtAddressLine1;
-
-    @FindBy(id = "address2")
-    WebElement txtAddressLine2;
-
-    @FindBy(id = "city")
-    WebElement txtAddressCity;
-
-    @FindBy(id = "id_state")
-    WebElement sddAddressState;
-
-    @FindBy(css = "#id_state option")
-    WebElement sddAddressStateOption;
-
-    @FindBy(id = "postcode")
-    WebElement txtAddressZip;
-
-    @FindBy(id = "id_country")
-    WebElement sddAddressCountry;
-
-    @FindBy(id = "other")
-    WebElement txtAdditionalInfo;
-
-    @FindBy(id = "phone")
-    WebElement txtHomePhone;
-
-    @FindBy(id = "alias")
-    WebElement txtAddressAlias;
-
-    @FindBy(id = "phone_mobile")
-    WebElement txtMobilePhone;
-
-    @FindBy(id = "submitAccount")
-    WebElement btnRegisterButton;
+    private static final By txtCreateByEmail = By.id("email_create");
+    private static final By btnCreateAccount = By.id("SubmitCreate");
+    private static final By cbMale = By.id("id_gender1");
+    private static final By cbFemale = By.id("id_gender2");
+    private static final By txtCustomerFirstName = By.id("customer_firstname");
+    private static final By txtCustomerLastName = By.id("customer_lastname");
+    private static final By txtCreateEmail = By.id("email");
+    private static final By txtCreatePassword = By.id("passwd");
+    private static final By sddBirthDay = By.id("days");
+    private static final By sddBirthMonth = By.id("months");
+    private static final By sddBirthYear = By.id("years");
+    private static final By cbNewsletterSignUp = By.id("newsletter");
+    private static final By cbSpecialOffers = By.id("optin");
+    private static final By txtAddressCompanyName = By.id("company");
+    private static final By txtAddressLine1 = By.id("address1");
+    private static final By txtAddressLine2 = By.id("address2");
+    private static final By txtAddressCity = By.id("city");
+    private static final By sddAddressState = By.id("id_state");
+    private static final By sddAddressStateOption = By.cssSelector("#id_state option");
+    private static final By txtAddressZip = By.id("postcode");
+    private static final By sddAddressCountry = By.id("id_country");
+    private static final By txtAdditionalInfo = By.id("other");
+    private static final By txtHomePhone = By.id("phone");
+    private static final By txtAddressAlias = By.id("alias");
+    private static final By txtMobilePhone = By.id("phone_mobile");
+    private static final By btnRegisterButton = By.id("submitAccount");
 
     /**
      * errors:
      */
-    @FindBy(xpath = "//*[@id='create_account_error']/ol/li")
-    WebElement errCreateEmailError;
-
-    @FindBy(xpath = "//*[@id='center_column']/div/ol/li")
-    List<WebElement> errCreateAccountError;
+    private static final By errCreateEmailError = By.xpath("//*[@id='create_account_error']/ol/li");
+    private static final By errCreateAccountError = By.xpath("//*[@id='center_column']/div/ol/li");
 
     /**
      * status locators:
      */
-    @FindBy(css = "a[title='View my customer account'] span")
-    WebElement statusLoggedIn;
+    private static final By statusLoggedIn = By.cssSelector("a[title='View my customer account'] span");
 
 
     @Step("Opening account creation page")
     public void openPage() {
         driver.get(urlCreateAccount);
-        PageFactory.initElements(driver, this);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    @Step("Putting an email '{}' into field")
+    public void submitEmail(String emailAddress) {
+        driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
+        driver.findElement(btnCreateAccount).click();
     }
 
     @Step("Putting a valid email '{emailAddress}' into email field")
     public boolean tryValidEmail(String emailAddress) {
         submitEmail(emailAddress);
-        return cbMale.isDisplayed();
+        return driver.findElement(cbMale).isDisplayed();
     }
 
     @Step("Putting an invalid email '{emailAddress}' into email field")
     public String tryWrongEmail(String emailAddress) {
         submitEmail(emailAddress);
-        return errCreateEmailError.getText();
+        return driver.findElement(errCreateEmailError).getText();
     }
 
-    @Step("Putting an email '{}' into field")
-    public void submitEmail(String emailAddress) {
-        txtCreateByEmail.sendKeys(emailAddress);
-        btnCreateAccount.click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
 
     public void waitUntilStateSelectable() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(sddAddressStateOption));
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(sddAddressStateOption)));
     }
 
     @Step("Submitting a valid email")
     public void submitValidEmail(String createValidEmail) {
-        txtCreateByEmail.sendKeys(createValidEmail);
-        btnCreateAccount.click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElement(txtCreateByEmail).sendKeys(createValidEmail);
+        driver.findElement(btnCreateAccount).click();
     }
 
     @Step("Creating an account")
     public void createAccount(Account account) {
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         switch (account.getGender()) {
             case MR:
-                cbMale.click();
+                driver.findElement(cbMale).click();
                 break;
             case MRS:
-                cbFemale.click();
+                driver.findElement(cbFemale).click();
                 break;
         }
-        txtCustomerFirstName.sendKeys(account.getFirstName());
-        txtCustomerLastName.sendKeys(account.getLastName());
-        txtCreatePassword.sendKeys(account.getPassword());
-        new Select(sddBirthDay).selectByValue(account.getBirthDay());
-        new Select(sddBirthMonth).selectByValue(account.getBirthMonth());
-        new Select(sddBirthYear).selectByValue(account.getBirthYear());
+        driver.findElement(txtCustomerFirstName).sendKeys(account.getFirstName());
+        driver.findElement(txtCustomerLastName).sendKeys(account.getLastName());
+        driver.findElement(txtCreatePassword).sendKeys(account.getPassword());
+        new Select(driver.findElement(sddBirthDay)).selectByValue(account.getBirthDay());
+        new Select(driver.findElement(sddBirthMonth)).selectByValue(account.getBirthMonth());
+        new Select(driver.findElement(sddBirthYear)).selectByValue(account.getBirthYear());
         if (account.isSubscribe()) {
-            cbNewsletterSignUp.click();
+            driver.findElement(cbNewsletterSignUp).click();
         }
         if (account.isGetOffers()) {
-            cbSpecialOffers.click();
+            driver.findElement(cbSpecialOffers).click();
         }
-        txtAddressCompanyName.sendKeys(account.getCompanyName());
-        txtAddressLine1.sendKeys(account.getAddress1());
-        if (txtAddressLine2.isDisplayed()) {
-            txtAddressLine2.sendKeys(account.getAddress2());
+        driver.findElement(txtAddressCompanyName).sendKeys(account.getCompanyName());
+        driver.findElement(txtAddressLine1).sendKeys(account.getAddress1());
+        if (driver.findElement(txtAddressLine2).isDisplayed()) {
+            driver.findElement(txtAddressLine2).sendKeys(account.getAddress2());
         }
-        txtAddressCity.sendKeys(account.getCity());
-        new Select(sddAddressCountry).selectByValue(account.getCountry());
+        driver.findElement(txtAddressCity).sendKeys(account.getCity());
+        new Select(driver.findElement(sddAddressCountry)).selectByValue(account.getCountry());
         if (!account.getCountry().equals("")) {
             waitUntilStateSelectable();
-            new Select(sddAddressState).selectByIndex(account.getState());
-            txtAddressZip.sendKeys(account.getZip());
+            new Select(driver.findElement(sddAddressState)).selectByIndex(account.getState());
+            driver.findElement(txtAddressZip).sendKeys(account.getZip());
         }
-        txtAdditionalInfo.sendKeys(account.getOther());
-        txtHomePhone.sendKeys(account.getHomePhone());
-        txtMobilePhone.sendKeys(account.getMobilePhone());
-        txtAddressAlias.sendKeys(account.getAlias());
-        btnRegisterButton.click();
+        driver.findElement(txtAdditionalInfo).sendKeys(account.getOther());
+        driver.findElement(txtHomePhone).sendKeys(account.getHomePhone());
+        driver.findElement(txtMobilePhone).sendKeys(account.getMobilePhone());
+        driver.findElement(txtAddressAlias).sendKeys(account.getAlias());
+        driver.findElement(btnRegisterButton).click();
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
     @Step("Clearing all data automatically filled in by the system")
     public void clearAll() {
-        btnRegisterButton.isDisplayed();
-        txtCreateEmail.clear();
-        new Select(sddAddressCountry).selectByIndex(0);
-        txtAddressAlias.clear();
+        driver.findElement(btnRegisterButton).isDisplayed();
+        driver.findElement(txtCreateEmail).clear();
+        new Select(driver.findElement(sddAddressCountry)).selectByIndex(0);
+        driver.findElement(txtAddressAlias).clear();
     }
 
     @Step("Checking if account has been created successfully")
     public boolean isAccountCreated() {
-        return statusLoggedIn.isDisplayed();
+        return driver.findElement(statusLoggedIn).isDisplayed();
     }
 
     @Step("Checking errors")
     public List<WebElement> checkErrors() {
-        return errCreateAccountError;
+        return driver.findElements(errCreateAccountError);
     }
 }
 

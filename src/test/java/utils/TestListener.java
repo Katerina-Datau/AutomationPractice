@@ -1,10 +1,7 @@
 package utils;
 
 import io.qameta.allure.Attachment;
-import org.openqa.selenium.NoSuchSessionException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -48,7 +45,7 @@ public class TestListener implements ITestListener {
             } else {
                 return new byte[]{};
             }
-        } catch (NoSuchSessionException | IllegalStateException ex) {
+        } catch (IllegalStateException | WebDriverException ex) {
             return new byte[]{};
         }
     }

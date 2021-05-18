@@ -21,5 +21,4 @@ public class CartTest extends BaseTest {
         cartPage.validateItemsInCart("Printed Chiffon Dress", "$16.40");
         cartPage.validateOrderDetails(2, "45.40");
     }
-
 }

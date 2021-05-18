@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginPage extends BasePage {
     private static final String urlLoginPage = "http://automationpractice.com/index.php?controller=authentication&back=my-account";
-    private static final String urlLoggedPage = "http://automationpractice.com/index.php?controller=my-account";
 
     private static final By txtEmail = By.id("email");
     private static final By txtPassword = By.id("passwd");
@@ -20,7 +19,6 @@ public class LoginPage extends BasePage {
     private static final By btnRetrievePassword = By.xpath("//*[@id=\"form_forgotpassword\"]/fieldset/p/button");
 
     private static final By btnLogOut = By.className("logout");
-    private static final By btnLogIn = By.className("login");
 
     /**
      * status locators:
@@ -40,7 +38,7 @@ public class LoginPage extends BasePage {
     @Step("Opening Log In page")
     public void openPage() {
         driver.get(urlLoginPage);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
     @Step("Submitting credentials: email '{emailAddress}' and password '{password}'")
@@ -48,13 +46,13 @@ public class LoginPage extends BasePage {
         driver.findElement(txtEmail).sendKeys(emailAddress);
         driver.findElement(txtPassword).sendKeys(password);
         driver.findElement(btnLogin).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
     @Step("Checking if login attempt has been successful")
     public boolean ifLoggedIn() {
         try {
-            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             return driver.findElement(statusLoggedIn).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
@@ -63,15 +61,15 @@ public class LoginPage extends BasePage {
 
     @Step("Checking which login page error is displayed")
     public List<WebElement> checkError() {
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return driver.findElements(errLoginError);
     }
 
     @Step("Trying to retrieve forgotten password for '{emailAddress}'")
     public void passwordRetrieval(String email) {
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(btnForgotPassword).click();
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(txtEmail).sendKeys(email);
         driver.findElement(btnRetrievePassword).click();
     }
@@ -79,7 +77,7 @@ public class LoginPage extends BasePage {
     @Step("Checking if password retrieval has been successful")
     public boolean ifRetrieved() {
         try {
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             return driver.findElement(statusPasswordRetrieved).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;

@@ -13,12 +13,10 @@ import java.util.concurrent.TimeUnit;
 
 public class ShopPage extends BasePage {
 
-    public static final By btnAddToWishlist = By.className("addToWishlist");
-    private static final String urlShopPageWomen = "http://automationpractice.com/index.php?id_category=3&controller=category";
-    private static final By btnShopWomen = By.cssSelector("li a[title='Women']");
+    private static final String urlShopPage = "http://automationpractice.com/index.php?id_category=3&controller=category";
+    private static final By btnGoToShop = By.cssSelector("li a[title='Women']");
     private static final By btnContinueShopping = By.xpath("//*[@title='Continue shopping']");
     private static final By btnProceedToCheckout = By.xpath("//*[@title='Proceed to checkout']");
-    private static final By btnOpenCart = By.className("cart_block");
 
     public ShopPage(WebDriver driver) {
         super(driver);
@@ -26,16 +24,16 @@ public class ShopPage extends BasePage {
 
     @Step("Opening the 'Women' Shop page")
     public void openPage() {
-        driver.get(urlShopPageWomen);
+        driver.get(urlShopPage);
     }
 
     @Step("Opening the 'Women' Shop category")
     public void goToShop() {
-        driver.findElement(btnShopWomen).click();
+        driver.findElement(btnGoToShop).click();
     }
 
     public void waitUntilCanBuy() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.elementToBeClickable(btnContinueShopping));
     }
 
@@ -45,7 +43,7 @@ public class ShopPage extends BasePage {
         WebElement locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
 
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locAreaOfDetection);
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         actions.moveToElement(locAreaOfDetection).build().perform();
         locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
 

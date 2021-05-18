@@ -32,7 +32,7 @@ public class HomePage extends BasePage {
     @Step("Opening homepage")
     public void openPage() {
         driver.get(urlHomePage);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
     @Step("Typing in search bar: '{query}'")

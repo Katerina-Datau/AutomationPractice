@@ -9,11 +9,14 @@ public class AddressesCheckoutPage extends BasePage {
         super(driver);
     }
 
-    private static final String urlShippingAddresses = "http://automationpractice.com/index.php?controller=order&step=1&multi-shipping=0";
     private static final By btnConfirmAddress = By.name("processAddress");
 
     @Step("Confirming delivery address and proceeding to checkout")
     public void proceedToCheckout() {
         driver.findElement(btnConfirmAddress).click();
+    }
+
+    @Override
+    public void openPage() {
     }
 }
