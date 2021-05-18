@@ -121,6 +121,7 @@ public class CreateAccountTest extends BaseTest {
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
         createAccountPage.createAccount(account);
         List<WebElement> actualErrorList = createAccountPage.checkErrors();
+        Assert.assertEquals(actualErrorList.size(), 2);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "lastname is invalid."));
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "firstname is invalid."));
     }
@@ -287,6 +288,7 @@ public class CreateAccountTest extends BaseTest {
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
         createAccountPage.createAccount(account);
         List<WebElement> actualErrorList = createAccountPage.checkErrors();
+        Assert.assertEquals(actualErrorList.size(), 1);
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "You must register at least one phone number"));
     }
 }
