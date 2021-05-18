@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.TmsLink;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -10,6 +11,7 @@ import java.util.List;
 public class LoginTest extends BaseTest {
 
     @Test(description = "Log in with correct credentials")
+    @TmsLink("AP-28")
     public void correctLogin() {
         loginPage.openPage();
         loginPage.login("oberyn.martell@dorne.wst", "unbent111");
@@ -28,6 +30,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "Login attempt with incorrect credentials", dataProvider = "Input incorrect data")
+    @TmsLink("AP-34")
     public void accountTest(String email, String password, int errors, String errorMessage) {
         loginPage.openPage();
         loginPage.login(email, password);
@@ -38,6 +41,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "Password retrieval with correct credentials")
+    @TmsLink("AP-35")
     public void retrievePasswordCorrect() {
         loginPage.openPage();
         loginPage.passwordRetrieval("oberyn.martell@dorne.wst");
@@ -45,6 +49,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "Password retrieval with (null) credentials")
+    @TmsLink("AP-36")
     public void nullRetrieval() {
         loginPage.openPage();
         loginPage.passwordRetrieval("");
@@ -52,5 +57,14 @@ public class LoginTest extends BaseTest {
         List<WebElement> actualErrorList = loginPage.checkError();
         Assert.assertEquals(actualErrorList.size(), 1, "Error number doesn't match");
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."), "Error not found");
+    }
+
+    @Test(description = "Logging out")
+    @TmsLink("AP-27")
+    public void logOutTest() {
+        loginPage.openPage();
+        loginPage.login("oberyn.martell@dorne.wst", "unbent111");
+        loginPage.logOut();
+        Assert.assertFalse(loginPage.ifLoggedIn());
     }
 }

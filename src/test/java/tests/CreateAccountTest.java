@@ -1,10 +1,12 @@
 package tests;
 
 import io.qameta.allure.Issue;
+import io.qameta.allure.TmsLink;
 import model.Account;
 import model.Gender;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import utils.StringUtils;
 
@@ -15,53 +17,34 @@ public class CreateAccountTest extends BaseTest {
     /**
      * 1. Email validation page
      */
+
     @Test(description = "Input valid email address")
+    @TmsLink("AP-37")
     public void validEmail() {
         createAccountPage.openPage();
-        Assert.assertTrue(createAccountPage.tryValidEmail(StringUtils.createValidEmail()));
+        Assert.assertTrue(createAccountPage.tryValidEmail(StringUtils.createValidEmail()),
+                "Email expected to match");
     }
 
-    @Test(description = "Input invalid email with '@@' in the middle")
-    public void invalidEmailDoubleToad() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.createInvalidEmailDoubleToad()), "Invalid email address.");
+    @DataProvider(name = "Input incorrect data")
+    public Object[][] emailInput() {
+        return new Object[][]{
+                {StringUtils.createInvalidEmailDoubleToad(), "Invalid email address."},
+                {StringUtils.createInvalidEmailEndsWithDot(), "Invalid email address."},
+                {StringUtils.createInvalidEmailStartsWithDot(), "Invalid email address."},
+                {StringUtils.createInvalidEmailNoSyntax(), "Invalid email address."},
+                {StringUtils.createInvalidEmailForbiddenDomainSymbols('#'), "Invalid email address."},
+                {StringUtils.createInvalidEmailNull(), "Invalid email address."},
+                {StringUtils.emailAlreadyExists(), "An account using this email address has already been registered. Please enter a valid password or request a new one."},
+        };
     }
 
-    @Test(description = "Input invalid email with a dot in the end")
-    public void invalidEmailEndsWithDot() {
+    @Test(description = "Input incorrect email", dataProvider = "Input incorrect data")
+    @TmsLink("AP-1")
+    public void accountTest(String emailInput, String errorMessage) {
         createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.createInvalidEmailEndsWithDot()), "Invalid email address.");
-    }
-
-    @Test(description = "Input invalid email beginning with a dot")
-    public void invalidEmailStartsWithDot() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.createInvalidEmailStartsWithDot()), "Invalid email address.");
-    }
-
-    @Test(description = "Input invalid email lacking both '.' and '@'")
-    public void invalidEmailNoSyntax() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.createInvalidEmailNoSyntax()), "Invalid email address.");
-    }
-
-    @Test(description = "Input invalid email which contains forbidden symbols in domain name")
-    public void invalidEmailForbiddenDomainSymbols() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.createInvalidEmailForbiddenDomainSymbols('#')), "Invalid email address.");
-    }
-
-    @Test(description = "Input (null) email")
-    public void invalidEmailNullEmail() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(""), "Invalid email address.");
-    }
-
-    @Test(description = "Input a valid email that's already been registered")
-    public void emailAlreadyExists() {
-        createAccountPage.openPage();
-        Assert.assertEquals(createAccountPage.tryWrongEmail(StringUtils.emailAlreadyExists()),
-                "An account using this email address has already been registered. Please enter a valid password or request a new one.");
+        Assert.assertEquals(createAccountPage.tryWrongEmail(emailInput),
+                errorMessage, "Message doesn't match");
     }
 
     /**
@@ -89,6 +72,7 @@ public class CreateAccountTest extends BaseTest {
                 .getOffers(true)
                 .companyName(new StringUtils().space().agency())
                 .address2(new StringUtils().lordOfTheRings().location())
+                .other(new StringUtils().harryPotter().quote())
                 .homePhone(StringUtils.createBothifiedString("+###########"))
                 .build();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -217,7 +201,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input city with a name over limit of 64 characters")
     public void cityOverLimit() {
         Account account = Account.builder()
-                .city(StringUtils.createBothifiedString("##################################################################################################################################################################"))
+                .city(StringUtils.stringOver64())
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -282,7 +266,7 @@ public class CreateAccountTest extends BaseTest {
     @Test(description = "Input cellphone number over limit of 32 numbers")
     public void cellOverLimit() {
         Account account = Account.builder()
-                .mobilePhone(StringUtils.createBothifiedString("######################################"))
+                .mobilePhone(StringUtils.stringOver64())
                 .build();
         createAccountPage.openPage();
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
@@ -292,7 +276,7 @@ public class CreateAccountTest extends BaseTest {
         Assert.assertTrue(createAccountPage.findText(actualErrorList, "phone_mobile is too long. Maximum length: 32"));
     }
 
-    @Test(description = "Input non-required home phone number while leaving explicitly required cellphone number (null)", expectedExceptions = {AssertionError.class})
+    @Test(description = "Input non-required home phone number while leaving cellphone number (null)", expectedExceptions = {AssertionError.class})
     @Issue("Assertion Error")
     public void isCellRequired() {
         Account account = Account.builder()
@@ -303,6 +287,6 @@ public class CreateAccountTest extends BaseTest {
         createAccountPage.submitValidEmail(StringUtils.createValidEmail());
         createAccountPage.createAccount(account);
         List<WebElement> actualErrorList = createAccountPage.checkErrors();
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "You must register at least one phone number"), "Error expected");
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, "You must register at least one phone number"));
     }
 }

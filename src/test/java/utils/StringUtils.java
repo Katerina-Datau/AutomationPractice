@@ -41,12 +41,20 @@ public class StringUtils extends Faker {
         return createBothifiedString("????####?????");
     }
 
+    public static String createInvalidEmailNull() {
+        return createBothifiedString("");
+    }
+
     public static String createInvalidEmailForbiddenDomainSymbols(char symbol) {
         return createBothifiedString("????##@") + symbol + createBothifiedString("???.???");
     }
 
     public static String emailAlreadyExists() {
         return "oberyn.martell@dorne.wst";
+    }
+
+    public static String stringOver64() {
+        return createBothifiedString("##################################################################################################################################################################");
     }
 
 }

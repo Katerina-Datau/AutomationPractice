@@ -24,7 +24,7 @@ public class ShopPage extends BasePage {
         super(driver);
     }
 
-    @Step("Opening the 'Women' Shop category")
+    @Step("Opening the 'Women' Shop page")
     public void openPage() {
         driver.get(urlShopPageWomen);
     }

@@ -16,8 +16,6 @@ public class CartPage extends BasePage {
     private static final String urlCartPage = "http://automationpractice.com/index.php?controller=order";
 
     private static final By txtProductQuantity = By.cssSelector("span#summary_products_quantity");
-    private static final By txtPriceSansShipping = By.id("total_product");
-    private static final By txtShippingCost = By.id("total_shipping");
     private static final By txtTotalPrice = By.id("total_price");
     private static final By txtItemInCart = By.className("cart_item");
     private static final By txtItemPrice = By.cssSelector(".cart_total span");

@@ -20,7 +20,4 @@ public class MyAccountPage extends BasePage {
         driver.get(urlMyAccountPage);
     }
 
-    public void acc() {
-        driver.findElement(btnOrderHistoryAndDetails).click();
-    }
 }

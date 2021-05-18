@@ -40,6 +40,7 @@ public class LoginPage extends BasePage {
     @Step("Opening Log In page")
     public void openPage() {
         driver.get(urlLoginPage);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Step("Submitting credentials: email '{emailAddress}' and password '{password}'")
@@ -47,6 +48,7 @@ public class LoginPage extends BasePage {
         driver.findElement(txtEmail).sendKeys(emailAddress);
         driver.findElement(txtPassword).sendKeys(password);
         driver.findElement(btnLogin).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Step("Checking if login attempt has been successful")
@@ -83,4 +85,10 @@ public class LoginPage extends BasePage {
             return false;
         }
     }
+
+    @Step("Logging out")
+    public void logOut() {
+        driver.findElement(btnLogOut).click();
+    }
+
 }

@@ -119,6 +119,7 @@ public class CreateAccountPage extends BasePage {
     public void openPage() {
         driver.get(urlCreateAccount);
         PageFactory.initElements(driver, this);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Step("Putting a valid email '{emailAddress}' into email field")
@@ -193,6 +194,7 @@ public class CreateAccountPage extends BasePage {
         btnRegisterButton.click();
     }
 
+    @Step("Clearing all data automatically filled in by the system")
     public void clearAll() {
         btnRegisterButton.isDisplayed();
         txtCreateEmail.clear();
