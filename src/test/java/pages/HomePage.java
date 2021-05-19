@@ -43,6 +43,7 @@ public class HomePage extends BasePage {
     @Step("Submitting search request")
     public void submitSearch() {
         driver.findElement(btnSearchButton).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Step("Viewing search results in a list")
@@ -102,5 +103,4 @@ public class HomePage extends BasePage {
         }
         return urlList;
     }
-
 }

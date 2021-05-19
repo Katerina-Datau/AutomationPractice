@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SearchBarTest extends BaseTest {
 
-    @Test(description = "Press the search button without actually putting in search phrase")
+    @Test(description = "Press the search button without actually putting in search query")
     @TmsLink("AP-17")
     public void searchForNull() {
         homePage.openPage();
@@ -129,5 +129,4 @@ public class SearchBarTest extends BaseTest {
         List<String> actualResultList = homePage.findItem();
         Assert.assertTrue(actualResultList.contains("http://automationpractice.com/img/p/7/7-home_default.jpg"));
     }
-
 }

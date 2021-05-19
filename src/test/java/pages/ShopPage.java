@@ -25,11 +25,13 @@ public class ShopPage extends BasePage {
     @Step("Opening the 'Women' Shop page")
     public void openPage() {
         driver.get(urlShopPage);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Step("Opening the 'Women' Shop category")
     public void goToShop() {
         driver.findElement(btnGoToShop).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     public void waitUntilCanBuy() {
@@ -61,7 +63,6 @@ public class ShopPage extends BasePage {
         driver.findElement(btnProceedToCheckout).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-
 }
 
 

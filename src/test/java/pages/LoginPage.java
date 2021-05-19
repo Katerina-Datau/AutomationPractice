@@ -88,5 +88,4 @@ public class LoginPage extends BasePage {
     public void logOut() {
         driver.findElement(btnLogOut).click();
     }
-
 }

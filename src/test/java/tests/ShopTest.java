@@ -25,5 +25,4 @@ public class ShopTest extends BaseTest {
         paymentMethodSelectionPage.confirmOrder();
         Assert.assertEquals(paymentMethodSelectionPage.isOrderComplete(), "Your order on My Store is complete.");
     }
-
 }

@@ -40,5 +40,4 @@ public class PaymentMethodSelectionPage extends BasePage {
     @Override
     public void openPage() {
     }
-
 }

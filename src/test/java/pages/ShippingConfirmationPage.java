@@ -28,5 +28,4 @@ public class ShippingConfirmationPage extends BasePage {
     @Override
     public void openPage() {
     }
-
 }
