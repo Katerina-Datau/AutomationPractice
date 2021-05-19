@@ -4,6 +4,8 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
 public class ShippingConfirmationPage extends BasePage {
     public ShippingConfirmationPage(WebDriver driver) {
         super(driver);
@@ -20,6 +22,7 @@ public class ShippingConfirmationPage extends BasePage {
     @Step("Proceeding to checkout")
     public void proceedToCheckout() {
         driver.findElement(btnConfirmCarrier).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.testng.Assert;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 public class CartPage extends BasePage {
 
@@ -34,6 +35,7 @@ public class CartPage extends BasePage {
     @Step("Proceeding to checkout")
     public void proceedToCheckout() {
         driver.findElement(btnProceedToCheckout).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     public void waitUntilCanProceed() {

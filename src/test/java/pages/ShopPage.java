@@ -59,6 +59,7 @@ public class ShopPage extends BasePage {
     @Step("Proceeding to shopping cart")
     public void proceedToCheckout() {
         driver.findElement(btnProceedToCheckout).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
 }
