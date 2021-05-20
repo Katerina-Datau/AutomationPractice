@@ -1,16 +1,20 @@
 package tests;
 
+import com.google.common.collect.ImmutableMap;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import pages.*;
 import utils.TestListener;
 
 import java.util.concurrent.TimeUnit;
+
+import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 @Listeners(TestListener.class)
 
@@ -25,6 +29,16 @@ public class BaseTest {
     AddressesCheckoutPage addressesCheckoutPage;
     PaymentMethodSelectionPage paymentMethodSelectionPage;
     ShippingConfirmationPage shippingConfirmationPage;
+
+    @BeforeSuite
+    void setAllureEnvironment() {
+        allureEnvironmentWriter(
+                ImmutableMap.<String, String>builder()
+                        .put("Browser", "Chrome")
+                        .put("Browser.Version", "90.0.4430.212")
+                        .put("URL", "http://automationpractice.com/index.php")
+                        .build());
+    }
 
     @BeforeMethod(description = "Open browser and maximize the window")
     public void setUp(ITestContext context) {

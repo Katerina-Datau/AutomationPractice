@@ -12,7 +12,6 @@ public class PaymentMethodSelectionPage extends BasePage {
     }
 
     private static final By btnPayByBankWire = By.className("bankwire");
-
     private static final By btnOrderConfirmation = By.xpath("//*[@id=\"cart_navigation\"]/button");
 
     /**

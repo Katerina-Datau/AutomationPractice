@@ -17,7 +17,6 @@ public class LoginPage extends BasePage {
     private static final By btnLogin = By.id("SubmitLogin");
     private static final By btnForgotPassword = By.cssSelector(".lost_password a");
     private static final By btnRetrievePassword = By.xpath("//*[@id=\"form_forgotpassword\"]/fieldset/p/button");
-
     private static final By btnLogOut = By.className("logout");
 
     /**

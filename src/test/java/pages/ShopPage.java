@@ -43,12 +43,10 @@ public class ShopPage extends BasePage {
     public void addToCart(String productName) {
         Actions actions = new Actions(driver);
         WebElement locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
-
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locAreaOfDetection);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         actions.moveToElement(locAreaOfDetection).build().perform();
         locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
-
         WebElement btnAddToCart = locAreaOfDetection.findElement(By.xpath(String.format("//*[@title='%s']/ancestor::li[1]//*[@title='Add to cart']", productName)));
         btnAddToCart.click();
     }

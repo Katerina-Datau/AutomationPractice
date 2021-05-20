@@ -56,5 +56,4 @@ public class StringUtils extends Faker {
     public static String stringOver64() {
         return createBothifiedString("##################################################################################################################################################################");
     }
-
 }

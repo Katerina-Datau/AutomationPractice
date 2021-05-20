@@ -22,5 +22,4 @@ public class AddressesCheckoutPage extends BasePage {
     @Override
     public void openPage() {
     }
-
 }

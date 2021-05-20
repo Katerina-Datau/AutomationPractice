@@ -19,7 +19,7 @@ public class Account {
     String firstName = faker.name().firstName();
 
     @Default
-    String lastName = faker.gameOfThrones().house();
+    String lastName = faker.name().lastName();
 
     @Default
     String password = faker.internet().password(5, 32);

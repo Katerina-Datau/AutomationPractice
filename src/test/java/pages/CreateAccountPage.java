@@ -64,7 +64,6 @@ public class CreateAccountPage extends BasePage {
         driver.get(urlCreateAccount);
     }
 
-    @Step("Putting an email '{}' into field")
     public void submitEmail(String emailAddress) {
         driver.findElement(txtCreateByEmail).sendKeys(emailAddress);
         driver.findElement(btnCreateAccount).click();
@@ -81,7 +80,6 @@ public class CreateAccountPage extends BasePage {
         submitEmail(emailAddress);
         return driver.findElement(errCreateEmailError).getText();
     }
-
 
     public void waitUntilStateSelectable() {
         WebDriverWait wait = new WebDriverWait(driver, 15);
