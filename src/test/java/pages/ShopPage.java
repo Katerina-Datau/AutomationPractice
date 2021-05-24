@@ -25,13 +25,13 @@ public class ShopPage extends BasePage {
     @Step("Opening the 'Women' Shop page")
     public void openPage() {
         driver.get(urlShopPage);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Step("Opening the 'Women' Shop category")
     public void goToShop() {
         driver.findElement(btnGoToShop).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     public void waitUntilCanBuy() {
@@ -44,7 +44,7 @@ public class ShopPage extends BasePage {
         Actions actions = new Actions(driver);
         WebElement locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", locAreaOfDetection);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         actions.moveToElement(locAreaOfDetection).build().perform();
         locAreaOfDetection = driver.findElement(By.cssSelector("[alt='" + productName + "']"));
         WebElement btnAddToCart = locAreaOfDetection.findElement(By.xpath(String.format("//*[@title='%s']/ancestor::li[1]//*[@title='Add to cart']", productName)));
@@ -59,7 +59,7 @@ public class ShopPage extends BasePage {
     @Step("Proceeding to shopping cart")
     public void proceedToCheckout() {
         driver.findElement(btnProceedToCheckout).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 }
 

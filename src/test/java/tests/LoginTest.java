@@ -48,15 +48,24 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.ifRetrieved(), "Failed to retrieve password");
     }
 
-    @Test(description = "Password retrieval with (null) credentials")
-    @TmsLink("AP-36")
-    public void nullRetrieval() {
+    @DataProvider(name = "Retrieve with incorrect data")
+    public Object[][] retrievalInput() {
+        return new Object[][]{
+                {"", 1, "Invalid email address."},
+                {"oberyn.martell@@dorne.wst", 1, "Invalid email address."},
+                {"quentyn@dorne.wst", 1, "There is no account registered for this email address."}
+        };
+    }
+
+    @Test(description = "Password retrieval attempt with incorrect email", dataProvider = "Retrieve with incorrect data")
+    @TmsLink("AP-38")
+    public void retrievalTest(String email, int errors, String errorMessage) {
         loginPage.openPage();
-        loginPage.passwordRetrieval("");
+        loginPage.passwordRetrieval(email);
         Assert.assertFalse(loginPage.ifRetrieved());
         List<WebElement> actualErrorList = loginPage.checkError();
-        Assert.assertEquals(actualErrorList.size(), 1, "Error number doesn't match");
-        Assert.assertTrue(createAccountPage.findText(actualErrorList, "Invalid email address."), "Error not found");
+        Assert.assertEquals(actualErrorList.size(), errors, "Error number doesn't match");
+        Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage), "Error not found");
     }
 
     @Test(description = "Logging out")

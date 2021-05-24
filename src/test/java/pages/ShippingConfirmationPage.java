@@ -22,7 +22,7 @@ public class ShippingConfirmationPage extends BasePage {
     @Step("Proceeding to checkout")
     public void proceedToCheckout() {
         driver.findElement(btnConfirmCarrier).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Override

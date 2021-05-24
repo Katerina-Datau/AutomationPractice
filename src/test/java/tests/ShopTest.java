@@ -23,6 +23,8 @@ public class ShopTest extends BaseTest {
         shippingConfirmationPage.proceedToCheckout();
         paymentMethodSelectionPage.payByWire();
         paymentMethodSelectionPage.confirmOrder();
-        Assert.assertEquals(paymentMethodSelectionPage.isOrderComplete(), "Your order on My Store is complete.");
+        Assert.assertEquals(paymentMethodSelectionPage.isOrderComplete(),
+                "Your order on My Store is complete.",
+                "Something went wrong");
     }
 }
