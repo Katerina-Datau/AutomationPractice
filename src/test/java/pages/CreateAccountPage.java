@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import model.Account;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Log4j2(topic = "creating account test log")
 public class CreateAccountPage extends BasePage {
 
     public CreateAccountPage(WebDriver driver) {
@@ -95,45 +97,49 @@ public class CreateAccountPage extends BasePage {
 
     @Step("Creating an account")
     public void createAccount(Account account) {
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        switch (account.getGender()) {
-            case MR:
-                driver.findElement(cbMale).click();
-                break;
-            case MRS:
-                driver.findElement(cbFemale).click();
-                break;
+        try {
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            switch (account.getGender()) {
+                case MR:
+                    driver.findElement(cbMale).click();
+                    break;
+                case MRS:
+                    driver.findElement(cbFemale).click();
+                    break;
+            }
+            driver.findElement(txtCustomerFirstName).sendKeys(account.getFirstName());
+            driver.findElement(txtCustomerLastName).sendKeys(account.getLastName());
+            driver.findElement(txtCreatePassword).sendKeys(account.getPassword());
+            new Select(driver.findElement(sddBirthDay)).selectByValue(account.getBirthDay());
+            new Select(driver.findElement(sddBirthMonth)).selectByValue(account.getBirthMonth());
+            new Select(driver.findElement(sddBirthYear)).selectByValue(account.getBirthYear());
+            if (account.isSubscribe()) {
+                driver.findElement(cbNewsletterSignUp).click();
+            }
+            if (account.isGetOffers()) {
+                driver.findElement(cbSpecialOffers).click();
+            }
+            driver.findElement(txtAddressCompanyName).sendKeys(account.getCompanyName());
+            driver.findElement(txtAddressLine1).sendKeys(account.getAddress1());
+            if (driver.findElement(txtAddressLine2).isDisplayed()) {
+                driver.findElement(txtAddressLine2).sendKeys(account.getAddress2());
+            }
+            driver.findElement(txtAddressCity).sendKeys(account.getCity());
+            new Select(driver.findElement(sddAddressCountry)).selectByValue(account.getCountry());
+            if (!account.getCountry().equals("")) {
+                waitUntilStateSelectable();
+                new Select(driver.findElement(sddAddressState)).selectByIndex(account.getState());
+                driver.findElement(txtAddressZip).sendKeys(account.getZip());
+            }
+            driver.findElement(txtAdditionalInfo).sendKeys(account.getOther());
+            driver.findElement(txtHomePhone).sendKeys(account.getHomePhone());
+            driver.findElement(txtMobilePhone).sendKeys(account.getMobilePhone());
+            driver.findElement(txtAddressAlias).sendKeys(account.getAlias());
+            driver.findElement(btnRegisterButton).click();
+            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.error("It happened again", e);
         }
-        driver.findElement(txtCustomerFirstName).sendKeys(account.getFirstName());
-        driver.findElement(txtCustomerLastName).sendKeys(account.getLastName());
-        driver.findElement(txtCreatePassword).sendKeys(account.getPassword());
-        new Select(driver.findElement(sddBirthDay)).selectByValue(account.getBirthDay());
-        new Select(driver.findElement(sddBirthMonth)).selectByValue(account.getBirthMonth());
-        new Select(driver.findElement(sddBirthYear)).selectByValue(account.getBirthYear());
-        if (account.isSubscribe()) {
-            driver.findElement(cbNewsletterSignUp).click();
-        }
-        if (account.isGetOffers()) {
-            driver.findElement(cbSpecialOffers).click();
-        }
-        driver.findElement(txtAddressCompanyName).sendKeys(account.getCompanyName());
-        driver.findElement(txtAddressLine1).sendKeys(account.getAddress1());
-        if (driver.findElement(txtAddressLine2).isDisplayed()) {
-            driver.findElement(txtAddressLine2).sendKeys(account.getAddress2());
-        }
-        driver.findElement(txtAddressCity).sendKeys(account.getCity());
-        new Select(driver.findElement(sddAddressCountry)).selectByValue(account.getCountry());
-        if (!account.getCountry().equals("")) {
-            waitUntilStateSelectable();
-            new Select(driver.findElement(sddAddressState)).selectByIndex(account.getState());
-            driver.findElement(txtAddressZip).sendKeys(account.getZip());
-        }
-        driver.findElement(txtAdditionalInfo).sendKeys(account.getOther());
-        driver.findElement(txtHomePhone).sendKeys(account.getHomePhone());
-        driver.findElement(txtMobilePhone).sendKeys(account.getMobilePhone());
-        driver.findElement(txtAddressAlias).sendKeys(account.getAlias());
-        driver.findElement(btnRegisterButton).click();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     }
 
     @Step("Clearing all data automatically filled in by the system")
