@@ -29,8 +29,10 @@ public class ShopTest extends BaseTest {
             Assert.assertEquals(paymentMethodSelectionPage.isOrderComplete(),
                     "Your order on My Store is complete.",
                     "Something went wrong");
+            log.info("Test \"Buying one item, paying by bank wire and confirming the order\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occurred" + e.getMessage());
+            Assert.fail();
         }
     }
 }

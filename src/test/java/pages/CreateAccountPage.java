@@ -97,7 +97,6 @@ public class CreateAccountPage extends BasePage {
 
     @Step("Creating an account")
     public void createAccount(Account account) {
-        try {
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             switch (account.getGender()) {
                 case MR:
@@ -137,9 +136,6 @@ public class CreateAccountPage extends BasePage {
             driver.findElement(txtAddressAlias).sendKeys(account.getAlias());
             driver.findElement(btnRegisterButton).click();
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        } catch (Exception e) {
-            log.error("It happened again", e);
-        }
     }
 
     @Step("Clearing all data automatically filled in by the system")

@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.TmsLink;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Log4j2(topic = "cart test log")
@@ -24,9 +25,10 @@ public class CartTest extends BaseTest {
             cartPage.validateItemsInCart("Blouse", "$27.00");
             cartPage.validateItemsInCart("Printed Chiffon Dress", "$16.40");
             cartPage.validateOrderDetails(2, "45.40");
-        } catch (NoSuchElementException e) {
-            log.info(e.getClass().getName());
-            log.error("It happened again", e);
+            log.info("Test \"Check names and prices of items in cart\"  has been completed successfully");
+        } catch (Exception e) {
+            log.error("An exception has occured", e.getMessage());
+            Assert.fail();
         }
     }
 }

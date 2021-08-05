@@ -19,8 +19,10 @@ public class LoginTest extends BaseTest {
             loginPage.openPage();
             loginPage.login("oberyn.martell@dorne.wst", "unbent111");
             Assert.assertTrue(loginPage.ifLoggedIn());
+            log.info("Test \"Log in with correct credentials\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occured" + e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -45,8 +47,10 @@ public class LoginTest extends BaseTest {
             List<WebElement> actualErrorList = loginPage.checkError();
             Assert.assertEquals(actualErrorList.size(), errors, "Error number doesn't match");
             Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage), "Error not found");
+            log.info("Test \"Login attempt with incorrect credentials\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occured" + e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -57,8 +61,10 @@ public class LoginTest extends BaseTest {
             loginPage.openPage();
             loginPage.passwordRetrieval("oberyn.martell@dorne.wst");
             Assert.assertTrue(loginPage.ifRetrieved(), "Failed to retrieve password");
+            log.info("Test \"Password retrieval with correct credentials\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occured" + e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -81,8 +87,10 @@ public class LoginTest extends BaseTest {
             List<WebElement> actualErrorList = loginPage.checkError();
             Assert.assertEquals(actualErrorList.size(), errors, "Error number doesn't match");
             Assert.assertTrue(createAccountPage.findText(actualErrorList, errorMessage), "Error not found");
+            log.info("Test \"Password retrieval attempt with incorrect email\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occured" + e.getMessage());
+            Assert.fail();
         }
     }
 
@@ -94,8 +102,10 @@ public class LoginTest extends BaseTest {
             loginPage.login("oberyn.martell@dorne.wst", "unbent111");
             loginPage.logOut();
             Assert.assertFalse(loginPage.ifLoggedIn());
+            log.info("Test \"Logging out\" has been completed successfully");
         } catch (Exception e) {
-            log.error("It happened again", e);
+            log.error("An exception has occured" + e.getMessage());
+            Assert.fail();
         }
     }
 }

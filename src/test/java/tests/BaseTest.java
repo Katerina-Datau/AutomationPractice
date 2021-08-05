@@ -2,13 +2,11 @@ package tests;
 
 import com.google.common.collect.ImmutableMap;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import pages.*;
 import utils.TestListener;
 
@@ -63,6 +61,7 @@ public class BaseTest {
         driver.manage().deleteAllCookies();
         driver.quit();
     }
+
 }
 
 
